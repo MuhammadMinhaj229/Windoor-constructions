@@ -1,0 +1,78 @@
+body {
+            background-color: #f8fafc;
+            background-image:
+                radial-gradient(circle at 5% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 95% 85%, rgba(217, 160, 91, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+        .luxury-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #f3e8d3 0%, #d9a05b 50%, #b47e3a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-gradient-silver {
+            background: linear-gradient(135deg, #1e293b 40%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(10, 7, 21, 0.95); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(217, 160, 91, 0.25); border-radius: 4px; border: 2px solid #05030b; }
+
+        /* Door grain classes */
+        .wood-teak-grain { background: linear-gradient(135deg, #8b4513 0%, #a0522d 40%, #8b4513 80%); }
+        .wood-charcoal-grain { background: linear-gradient(135deg, #262626 0%, #404040 55%, #171717 100%); }
+        .wood-rose-grain { background: linear-gradient(135deg, #5c1d1d 0%, #800000 50%, #4a1515 100%); }
+        .wood-ivory-grain { background: linear-gradient(135deg, #fefefe 0%, #e8d5b5 50%, #d4bda2 100%); }
+        .wood-walnut-grain { background: linear-gradient(135deg, #4a2c0a 0%, #6b3d1a 45%, #3d2008 100%); }
+        .wood-ash-grain { background: linear-gradient(135deg, #c5b9aa 0%, #d8cfc5 45%, #b0a498 100%); }
+
+        /* Product card door SVG renders */
+        .door-card { transition: all 0.3s ease; }
+        .door-card:hover { transform: translateY(-6px); }
+        .door-card:hover .door-icon { filter: drop-shadow(0 0 12px rgba(217,160,91,0.4)); }
+
+        /* Animated counter */
+        @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .stat-num { animation: countUp 0.6s ease forwards; }
+
+        /* FAQ accordion */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-answer.open { max-height: 300px; }
+        .faq-chevron { transition: transform 0.3s ease; }
+        .faq-chevron.rotated { transform: rotate(180deg); }
+
+        /* Mobile nav */
+        #mobile-nav { transform: translateX(-100%); transition: transform 0.3s ease; }
+        #mobile-nav.open { transform: translateX(0); }
+
+        /* Urgency pulse */
+        @keyframes urgencyPulse {
+            0%, 100% { background-color: rgba(239, 68, 68, 0.12); }
+            50% { background-color: rgba(239, 68, 68, 0.22); }
+        }
+        .urgency-badge { animation: urgencyPulse 2.5s ease infinite; }
+
+        /* Catalogue card door visual */
+        .cat-door-frame {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cat-door-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.5);
+            z-index: 1;
+            pointer-events: none;
+        }
