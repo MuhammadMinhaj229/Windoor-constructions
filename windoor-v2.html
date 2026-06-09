@@ -78,33 +78,112 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            background-color: #05030b;
+            background-image:
+                radial-gradient(circle at 5% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 95% 85%, rgba(217, 160, 91, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+        .luxury-glass {
+            background: rgba(18, 13, 33, 0.65);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 213, 181, 0.1);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #f3e8d3 0%, #d9a05b 50%, #b47e3a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-gradient-silver {
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(10, 7, 21, 0.95); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(217, 160, 91, 0.25); border-radius: 4px; border: 2px solid #05030b; }
+
+        /* Door grain classes */
+        .wood-teak-grain { background: linear-gradient(135deg, #8b4513 0%, #a0522d 40%, #8b4513 80%); }
+        .wood-charcoal-grain { background: linear-gradient(135deg, #262626 0%, #404040 55%, #171717 100%); }
+        .wood-rose-grain { background: linear-gradient(135deg, #5c1d1d 0%, #800000 50%, #4a1515 100%); }
+        .wood-ivory-grain { background: linear-gradient(135deg, #fefefe 0%, #e8d5b5 50%, #d4bda2 100%); }
+        .wood-walnut-grain { background: linear-gradient(135deg, #4a2c0a 0%, #6b3d1a 45%, #3d2008 100%); }
+        .wood-ash-grain { background: linear-gradient(135deg, #c5b9aa 0%, #d8cfc5 45%, #b0a498 100%); }
+
+        /* Product card door SVG renders */
+        .door-card { transition: all 0.3s ease; }
+        .door-card:hover { transform: translateY(-6px); }
+        .door-card:hover .door-icon { filter: drop-shadow(0 0 12px rgba(217,160,91,0.4)); }
+
+        /* Animated counter */
+        @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .stat-num { animation: countUp 0.6s ease forwards; }
+
+        /* FAQ accordion */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-answer.open { max-height: 300px; }
+        .faq-chevron { transition: transform 0.3s ease; }
+        .faq-chevron.rotated { transform: rotate(180deg); }
+
+        /* Mobile nav */
+        #mobile-nav { transform: translateX(-100%); transition: transform 0.3s ease; }
+        #mobile-nav.open { transform: translateX(0); }
+
+        /* Urgency pulse */
+        @keyframes urgencyPulse {
+            0%, 100% { background-color: rgba(239, 68, 68, 0.12); }
+            50% { background-color: rgba(239, 68, 68, 0.22); }
+        }
+        .urgency-badge { animation: urgencyPulse 2.5s ease infinite; }
+
+        /* Catalogue card door visual */
+        .cat-door-frame {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cat-door-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.5);
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body class="text-slate-900 font-sans antialiased overflow-x-hidden custom-scrollbar">
+<body class="text-slate-100 font-sans antialiased overflow-x-hidden custom-scrollbar">
 
     <!-- ── MOBILE NAV OVERLAY ─────────────────────────────────── -->
-    <div id="mobile-nav" class="fixed inset-0 z-[60] bg-white flex flex-col p-8 pt-24 gap-6 lg:hidden">
-        <button onclick="toggleMobileNav()" class="absolute top-6 right-6 text-slate-700 text-2xl"><i class="fa-solid fa-xmark"></i></button>
-        <a href="#about" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 border-b border-slate-200 pb-4">The Brand</a>
-        <a href="#whywpc" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 border-b border-slate-200 pb-4">Why WPC?</a>
-        <a href="#catalogue" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 border-b border-slate-200 pb-4">Product Catalogue</a>
-        <a href="#customizer" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 border-b border-slate-200 pb-4">Cost Estimator</a>
-        <a href="#gallery" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 border-b border-slate-200 pb-4">Gallery</a>
-        <a href="#testimonials" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 border-b border-slate-200 pb-4">Reviews</a>
-        <a href="#contact" onclick="toggleMobileNav()" class="text-2xl font-serif text-slate-900 pb-4">Contact</a>
+    <div id="mobile-nav" class="fixed inset-0 z-[60] bg-[#05030b]/98 flex flex-col p-8 pt-24 gap-6 lg:hidden">
+        <button onclick="toggleMobileNav()" class="absolute top-6 right-6 text-slate-300 text-2xl"><i class="fa-solid fa-xmark"></i></button>
+        <a href="#about" onclick="toggleMobileNav()" class="text-2xl font-serif text-white border-b border-white/5 pb-4">The Brand</a>
+        <a href="#whywpc" onclick="toggleMobileNav()" class="text-2xl font-serif text-white border-b border-white/5 pb-4">Why WPC?</a>
+        <a href="#catalogue" onclick="toggleMobileNav()" class="text-2xl font-serif text-white border-b border-white/5 pb-4">Product Catalogue</a>
+        <a href="#customizer" onclick="toggleMobileNav()" class="text-2xl font-serif text-white border-b border-white/5 pb-4">Cost Estimator</a>
+        <a href="#gallery" onclick="toggleMobileNav()" class="text-2xl font-serif text-white border-b border-white/5 pb-4">Gallery</a>
+        <a href="#testimonials" onclick="toggleMobileNav()" class="text-2xl font-serif text-white border-b border-white/5 pb-4">Reviews</a>
+        <a href="#contact" onclick="toggleMobileNav()" class="text-2xl font-serif text-white pb-4">Contact</a>
         <a href="https://wa.me/919642585067?text=Hi%20Windoor%20Constructions,%20I%20want%20a%20quote." target="_blank" class="mt-4 bg-gradient-to-r from-brand-gold to-brand-goldaccent text-neutral-950 font-bold text-sm tracking-widest uppercase px-6 py-4 rounded-lg flex items-center justify-center gap-2">
             <i class="fa-brands fa-whatsapp text-xl"></i> Get Instant Quote
         </a>
     </div>
 
     <!-- ── MOBILE STICKY BAR ──────────────────────────────────── -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 bg-white backdrop-blur-md border-t border-brand-gold/40 py-3 px-4 md:hidden flex items-center justify-between shadow-2xl">
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-[#0e0b1d]/95 backdrop-blur-md border-t border-brand-gold/20 py-3 px-4 md:hidden flex items-center justify-between shadow-2xl">
         <div>
             <span class="text-xs text-brand-gold font-serif tracking-widest uppercase block">Windoor Desk</span>
-            <span class="text-[10px] text-slate-600">Direct Contractor Support</span>
+            <span class="text-[10px] text-slate-400">Direct Contractor Support</span>
         </div>
         <div class="flex items-center gap-2">
-            <a href="tel:+919642585067" class="bg-slate-200 text-slate-900 font-bold text-xs px-3 py-2.5 rounded-full flex items-center gap-1.5 transition">
+            <a href="tel:+919642585067" class="bg-white/10 text-white font-bold text-xs px-3 py-2.5 rounded-full flex items-center gap-1.5 transition">
                 <i class="fa-solid fa-phone text-brand-gold"></i> Call
             </a>
             <a href="https://wa.me/919642585067?text=Hi%20Windoor%20Constructions,%20I%20am%20interested%20in%20your%20premium%20doors." target="_blank" class="bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-xs px-4 py-2.5 rounded-full flex items-center gap-2 transition shadow-lg">
@@ -116,8 +195,8 @@
     <!-- ── DESKTOP FLOATING CTAs ──────────────────────────────── -->
     <div class="fixed bottom-20 right-6 z-40 hidden md:flex flex-col gap-3.5">
         <a href="https://wa.me/919642585067?text=Hi%20Windoor%20Constructions,%20I%20am%20interested%20in%20your%20premium%20doors." target="_blank"
-           class="bg-emerald-600 hover:bg-emerald-500 text-slate-900 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 group relative">
-            <span class="absolute right-16 bg-emerald-600 text-slate-900 text-xs py-1.5 px-3 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none font-semibold">WhatsApp Us</span>
+           class="bg-emerald-600 hover:bg-emerald-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 group relative">
+            <span class="absolute right-16 bg-emerald-600 text-white text-xs py-1.5 px-3 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none font-semibold">WhatsApp Us</span>
             <i class="fa-brands fa-whatsapp text-2xl"></i>
         </a>
         <a href="tel:+919642585067" class="bg-gradient-to-r from-brand-gold to-brand-goldaccent text-neutral-900 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 group relative">
@@ -127,14 +206,12 @@
     </div>
 
     <!-- ── HEADER ─────────────────────────────────────────────── -->
-    <header class="fixed w-full top-0 z-50 bg-white backdrop-blur-lg border-b border-slate-200 transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 bg-[#05030b]/90 backdrop-blur-lg border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-lg bg-gradient-to-tr from-brand-gold to-brand-goldaccent p-[1px]">
-                    <div class="w-full h-full bg-white rounded-lg flex items-center justify-center font-serif text-xl font-bold text-brand-gold">W</div>
-                </div>
+                <img src="assets/images/logo.png" alt="Windoor Constructions" class="w-12 h-12 object-contain bg-slate-50 p-1.5 rounded-xl border border-brand-gold/30 shadow-lg shadow-brand-gold/10 hover:scale-105 transition-transform" />
                 <div class="flex flex-col">
-                    <span class="text-xl font-bold tracking-[0.25em] text-slate-900 font-serif uppercase leading-none">Windoor</span>
+                    <span class="text-xl font-bold tracking-[0.25em] text-white font-serif uppercase leading-none">Windoor</span>
                     <span class="text-[9px] tracking-[0.4em] text-brand-goldaccent uppercase font-medium mt-1">Constructions</span>
                 </div>
             </div>
@@ -150,7 +227,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="tel:+919642585067" class="hidden sm:inline-flex bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-900 text-[11px] tracking-widest uppercase px-4 py-2.5 rounded transition font-semibold">
+                <a href="tel:+919642585067" class="hidden sm:inline-flex bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[11px] tracking-widest uppercase px-4 py-2.5 rounded transition font-semibold">
                     <i class="fa-solid fa-phone mr-2 text-brand-gold"></i>+91 96425 85067
                 </a>
                 <a href="https://wa.me/919642585067?text=Hi%20Windoor%20Constructions,%20I%20want%20a%20commercial%20quote." target="_blank"
@@ -158,7 +235,7 @@
                     <i class="fa-brands fa-whatsapp mr-1.5 text-lg"></i> Get Quote
                 </a>
                 <!-- Mobile Hamburger -->
-                <button onclick="toggleMobileNav()" class="lg:hidden p-2 text-slate-700 hover:text-slate-900 text-xl">
+                <button onclick="toggleMobileNav()" class="lg:hidden p-2 text-slate-300 hover:text-white text-xl">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -166,7 +243,7 @@
     </header>
 
     <!-- ── HERO ───────────────────────────────────────────────── -->
-    <section class="relative min-h-screen pt-36 pb-24 overflow-hidden border-b border-slate-200 flex items-center">
+    <section class="relative min-h-screen pt-36 pb-24 overflow-hidden border-b border-white/5 flex items-center">
         <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-purple-900/10 blur-[130px] rounded-full pointer-events-none"></div>
         <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-gold/5 blur-[150px] rounded-full pointer-events-none"></div>
 
@@ -180,7 +257,7 @@
                         Monsoon Order Slots Limited — Book Before August 2026
                     </div>
 
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/40 text-xs tracking-widest uppercase text-brand-gold">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-xs tracking-widest uppercase text-brand-gold">
                         <span class="w-2 h-2 bg-brand-gold rounded-full animate-pulse"></span> Warangal's Elite Building Material Suppliers
                     </div>
 
@@ -188,25 +265,25 @@
                         Doors That Never Warp, Rot, Or Let You Down
                     </h1>
 
-                    <p class="text-slate-600 text-base sm:text-lg font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    <p class="text-slate-400 text-base sm:text-lg font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
                         Windoor Constructions — Hanamkonda's authorized dealer for premium WPC, WFC & PVC doors, frames, and Spider hardware. Engineered for Telangana's climate. Installed. Guaranteed.
                     </p>
 
                     <!-- Key metrics -->
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 max-w-lg mx-auto lg:mx-0">
-                        <div class="p-4 rounded-xl border border-slate-200 bg-white backdrop-blur-md">
+                        <div class="p-4 rounded-xl border border-white/5 bg-[#120d24]/25 backdrop-blur-md">
                             <i class="fa-solid fa-shield text-brand-gold text-lg mb-1.5"></i>
-                            <h4 class="text-xs font-bold uppercase text-slate-800">100% Waterproof</h4>
+                            <h4 class="text-xs font-bold uppercase text-slate-200">100% Waterproof</h4>
                             <p class="text-[10px] text-slate-500">Termite-proof & eco-friendly</p>
                         </div>
-                        <div class="p-4 rounded-xl border border-slate-200 bg-white backdrop-blur-md">
+                        <div class="p-4 rounded-xl border border-white/5 bg-[#120d24]/25 backdrop-blur-md">
                             <i class="fa-solid fa-expand text-brand-gold text-lg mb-1.5"></i>
-                            <h4 class="text-xs font-bold uppercase text-slate-800">Tailor-Made Sizes</h4>
+                            <h4 class="text-xs font-bold uppercase text-slate-200">Tailor-Made Sizes</h4>
                             <p class="text-[10px] text-slate-500">25mm – 40mm to order</p>
                         </div>
-                        <div class="p-4 rounded-xl border border-slate-200 bg-white backdrop-blur-md col-span-2 sm:col-span-1">
+                        <div class="p-4 rounded-xl border border-white/5 bg-[#120d24]/25 backdrop-blur-md col-span-2 sm:col-span-1">
                             <i class="fa-solid fa-truck-fast text-brand-gold text-lg mb-1.5"></i>
-                            <h4 class="text-xs font-bold uppercase text-slate-800">Site Delivery</h4>
+                            <h4 class="text-xs font-bold uppercase text-slate-200">Site Delivery</h4>
                             <p class="text-[10px] text-slate-500">Warangal & Hyderabad</p>
                         </div>
                     </div>
@@ -216,7 +293,7 @@
                            class="bg-gradient-to-r from-brand-gold to-brand-goldaccent hover:from-brand-goldaccent hover:to-brand-gold text-neutral-950 font-bold text-xs tracking-widest uppercase px-8 py-4 rounded shadow-xl shadow-brand-gold/10 transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fa-brands fa-whatsapp text-lg"></i> Inquire via WhatsApp
                         </a>
-                        <a href="#estimator-anchor" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-900 font-semibold text-xs tracking-widest uppercase px-8 py-4 rounded transition duration-200 flex items-center justify-center gap-2">
+                        <a href="#estimator-anchor" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-xs tracking-widest uppercase px-8 py-4 rounded transition duration-200 flex items-center justify-center gap-2">
                             <i class="fa-solid fa-calculator text-brand-gold"></i> Live Cost Estimator
                         </a>
                     </div>
@@ -224,10 +301,10 @@
 
                 <!-- Right: Hero Visual Card -->
                 <div class="lg:col-span-5 flex justify-center">
-                    <div class="luxury-glass p-8 rounded-3xl w-full max-w-sm border border-brand-gold/30 flex flex-col gap-6 shadow-2xl relative">
+                    <div class="luxury-glass p-8 rounded-3xl w-full max-w-sm border border-brand-gold/10 flex flex-col gap-6 shadow-2xl relative">
                         <div class="absolute -top-3 -right-3 bg-brand-gold text-neutral-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Premium Range</div>
 
-                        <div class="h-80 w-full rounded-2xl relative overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
+                        <div class="h-80 w-full rounded-2xl relative overflow-hidden bg-[#1c182e] border border-white/5 flex items-center justify-center">
                             <div class="absolute inset-0 bg-gradient-to-tr from-[#130f25] to-[#241e3d] opacity-90"></div>
 
                             <!-- More detailed door visual -->
@@ -261,10 +338,10 @@
                         </div>
 
                         <div class="space-y-3 text-xs">
-                            <h4 class="font-bold text-slate-800 tracking-wider uppercase border-b border-slate-200 pb-2">Core Material Superiority</h4>
-                            <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i><span class="text-slate-700">100% Termite & Borer Resistance</span></div>
-                            <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i><span class="text-slate-700">Absolute Moisture & Water Shield</span></div>
-                            <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i><span class="text-slate-700">Zero Warping – Lifetime Guarantee</span></div>
+                            <h4 class="font-bold text-slate-200 tracking-wider uppercase border-b border-white/5 pb-2">Core Material Superiority</h4>
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i><span class="text-slate-300">100% Termite & Borer Resistance</span></div>
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i><span class="text-slate-300">Absolute Moisture & Water Shield</span></div>
+                            <div class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-emerald-500"></i><span class="text-slate-300">Zero Warping – Lifetime Guarantee</span></div>
                         </div>
                     </div>
                 </div>
@@ -273,56 +350,56 @@
     </section>
 
     <!-- ── SOCIAL PROOF NUMBERS ───────────────────────────────── -->
-    <section class="py-14 bg-white border-y border-slate-200">
+    <section class="py-14 bg-[#040209] border-y border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div class="space-y-1">
                     <p class="text-4xl font-serif font-bold text-gradient-gold stat-num">750+</p>
-                    <p class="text-[11px] uppercase tracking-widest text-slate-600 font-semibold">Doors Supplied</p>
+                    <p class="text-[11px] uppercase tracking-widest text-slate-400 font-semibold">Doors Supplied</p>
                 </div>
                 <div class="space-y-1">
                     <p class="text-4xl font-serif font-bold text-gradient-gold stat-num">8+</p>
-                    <p class="text-[11px] uppercase tracking-widest text-slate-600 font-semibold">Years in Business</p>
+                    <p class="text-[11px] uppercase tracking-widest text-slate-400 font-semibold">Years in Business</p>
                 </div>
                 <div class="space-y-1">
                     <p class="text-4xl font-serif font-bold text-gradient-gold stat-num">6</p>
-                    <p class="text-[11px] uppercase tracking-widest text-slate-600 font-semibold">Brand Partners</p>
+                    <p class="text-[11px] uppercase tracking-widest text-slate-400 font-semibold">Brand Partners</p>
                 </div>
                 <div class="space-y-1">
                     <p class="text-4xl font-serif font-bold text-gradient-gold stat-num">120+</p>
-                    <p class="text-[11px] uppercase tracking-widest text-slate-600 font-semibold">Active Contractors</p>
+                    <p class="text-[11px] uppercase tracking-widest text-slate-400 font-semibold">Active Contractors</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ── BRAND PARTNERS ─────────────────────────────────────── -->
-    <section id="about" class="py-16 bg-white">
+    <section id="about" class="py-16 bg-[#040209]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p class="text-center text-[11px] tracking-[0.3em] text-brand-gold/60 uppercase mb-10 font-bold">Authorized Manufacturing Brand Partners</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center text-center">
-                <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-gold/40 transition duration-300">
-                    <span class="text-lg font-serif font-bold tracking-widest text-slate-900">ELEGANT</span>
+                <div class="p-6 rounded-xl border border-white/5 bg-white/[0.01] hover:border-brand-gold/20 transition duration-300">
+                    <span class="text-lg font-serif font-bold tracking-widest text-slate-100">ELEGANT</span>
                     <span class="text-[9px] uppercase tracking-widest text-slate-500 block mt-1">Doors & Ply</span>
                 </div>
-                <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-gold/40 transition duration-300">
+                <div class="p-6 rounded-xl border border-white/5 bg-white/[0.01] hover:border-brand-gold/20 transition duration-300">
                     <span class="text-lg font-serif font-bold tracking-wider text-emerald-500">ecoste™</span>
                     <span class="text-[9px] uppercase tracking-widest text-slate-500 block mt-1">Wood Polymer</span>
                 </div>
-                <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-gold/40 transition duration-300">
-                    <span class="text-sm font-sans font-black tracking-tight text-slate-800">BLACK COBRA</span>
+                <div class="p-6 rounded-xl border border-white/5 bg-white/[0.01] hover:border-brand-gold/20 transition duration-300">
+                    <span class="text-sm font-sans font-black tracking-tight text-slate-200">BLACK COBRA</span>
                     <span class="text-[9px] uppercase tracking-widest text-slate-500 block mt-1">Engineered Wood</span>
                 </div>
-                <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-gold/40 transition duration-300">
-                    <span class="text-lg font-serif font-light tracking-widest text-slate-700">MASONITE.</span>
+                <div class="p-6 rounded-xl border border-white/5 bg-white/[0.01] hover:border-brand-gold/20 transition duration-300">
+                    <span class="text-lg font-serif font-light tracking-widest text-slate-300">MASONITE.</span>
                     <span class="text-[9px] uppercase tracking-widest text-slate-500 block mt-1">Fiber Core Molded</span>
                 </div>
-                <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-gold/40 transition duration-300">
+                <div class="p-6 rounded-xl border border-white/5 bg-white/[0.01] hover:border-brand-gold/20 transition duration-300">
                     <span class="text-lg font-sans font-black italic text-red-500">GMG PLY</span>
                     <span class="text-[9px] uppercase tracking-widest text-slate-500 block mt-1">Doors & WFC</span>
                 </div>
-                <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 hover:border-brand-gold/40 transition duration-300">
-                    <span class="text-lg font-serif italic text-slate-700">Spider®</span>
+                <div class="p-6 rounded-xl border border-white/5 bg-white/[0.01] hover:border-brand-gold/20 transition duration-300">
+                    <span class="text-lg font-serif italic text-slate-300">Spider®</span>
                     <span class="text-[9px] uppercase tracking-widest text-slate-500 block mt-1">Safety Hardware</span>
                 </div>
             </div>
@@ -330,64 +407,64 @@
     </section>
 
     <!-- ── WHY WPC ─────────────────────────────────────────────── -->
-    <section id="whywpc" class="py-24 border-y border-slate-200">
+    <section id="whywpc" class="py-24 border-y border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Engineering Matrix</span>
                 <h2 class="text-3xl sm:text-4xl font-serif text-gradient-silver">Why Modern WPC Beats Traditional Timber</h2>
                 <div class="w-12 h-0.5 bg-brand-gold mx-auto mt-4"></div>
-                <p class="text-sm text-slate-600 font-light leading-relaxed">Wood Plastic Composite (WPC) is the eco-friendly, zero-maintenance solution for Telangana's hot-humid climate.</p>
+                <p class="text-sm text-slate-400 font-light leading-relaxed">Wood Plastic Composite (WPC) is the eco-friendly, zero-maintenance solution for Telangana's hot-humid climate.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-4 space-y-4">
-                    <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 flex items-start gap-4">
+                    <div class="p-5 rounded-2xl border border-white/5 bg-white/[0.01] flex items-start gap-4">
                         <div class="w-8 h-8 rounded-lg bg-brand-gold/15 flex items-center justify-center text-brand-gold shrink-0"><i class="fa-solid fa-droplet-slash"></i></div>
                         <div>
-                            <h4 class="text-sm font-semibold text-slate-800">Zero Moisture Expansion</h4>
-                            <p class="text-xs text-slate-600 font-light mt-1">Impervious to bathrooms, kitchen moisture, and structural humidity corridors.</p>
+                            <h4 class="text-sm font-semibold text-slate-200">Zero Moisture Expansion</h4>
+                            <p class="text-xs text-slate-400 font-light mt-1">Impervious to bathrooms, kitchen moisture, and structural humidity corridors.</p>
                         </div>
                     </div>
-                    <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 flex items-start gap-4">
+                    <div class="p-5 rounded-2xl border border-white/5 bg-white/[0.01] flex items-start gap-4">
                         <div class="w-8 h-8 rounded-lg bg-brand-gold/15 flex items-center justify-center text-brand-gold shrink-0"><i class="fa-solid fa-bug"></i></div>
                         <div>
-                            <h4 class="text-sm font-semibold text-slate-800">100% Termite-Proof</h4>
-                            <p class="text-xs text-slate-600 font-light mt-1">Polymer binding prevents borers, dry rot, and biological infestation.</p>
+                            <h4 class="text-sm font-semibold text-slate-200">100% Termite-Proof</h4>
+                            <p class="text-xs text-slate-400 font-light mt-1">Polymer binding prevents borers, dry rot, and biological infestation.</p>
                         </div>
                     </div>
-                    <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 flex items-start gap-4">
+                    <div class="p-5 rounded-2xl border border-white/5 bg-white/[0.01] flex items-start gap-4">
                         <div class="w-8 h-8 rounded-lg bg-brand-gold/15 flex items-center justify-center text-brand-gold shrink-0"><i class="fa-solid fa-fire-flame-curved"></i></div>
                         <div>
-                            <h4 class="text-sm font-semibold text-slate-800">Class 1 Fire Retardant</h4>
-                            <p class="text-xs text-slate-600 font-light mt-1">Meets fire safety codes — ideal for commercial and multi-storey builds.</p>
+                            <h4 class="text-sm font-semibold text-slate-200">Class 1 Fire Retardant</h4>
+                            <p class="text-xs text-slate-400 font-light mt-1">Meets fire safety codes — ideal for commercial and multi-storey builds.</p>
                         </div>
                     </div>
-                    <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 flex items-start gap-4">
+                    <div class="p-5 rounded-2xl border border-white/5 bg-white/[0.01] flex items-start gap-4">
                         <div class="w-8 h-8 rounded-lg bg-brand-gold/15 flex items-center justify-center text-brand-gold shrink-0"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                         <div>
-                            <h4 class="text-sm font-semibold text-slate-800">High Screw Holding</h4>
-                            <p class="text-xs text-slate-600 font-light mt-1">Dense composition supports multi-hinge and heavy hardware loads.</p>
+                            <h4 class="text-sm font-semibold text-slate-200">High Screw Holding</h4>
+                            <p class="text-xs text-slate-400 font-light mt-1">Dense composition supports multi-hinge and heavy hardware loads.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="lg:col-span-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+                <div class="lg:col-span-8 overflow-x-auto rounded-2xl border border-white/5 bg-[#120d24]/30 p-6 shadow-2xl">
                     <table class="w-full text-left border-collapse min-w-[550px]">
                         <thead>
-                            <tr class="border-b border-brand-gold/30 text-slate-600 text-xs uppercase tracking-wider font-semibold">
+                            <tr class="border-b border-brand-gold/10 text-slate-400 text-xs uppercase tracking-wider font-semibold">
                                 <th class="pb-4">Metric</th>
                                 <th class="pb-4 text-brand-gold">WPC Composite</th>
                                 <th class="pb-4">Solid Wood</th>
                                 <th class="pb-4">Standard MDF</th>
                             </tr>
                         </thead>
-                        <tbody class="text-xs font-light text-slate-700 divide-y divide-white/5">
-                            <tr><td class="py-4 font-semibold text-slate-800">Water Resistance</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>100% Proof</td><td class="py-4 text-slate-500">Absorbs / Warps</td><td class="py-4 text-slate-500">Swells / Delaminates</td></tr>
-                            <tr><td class="py-4 font-semibold text-slate-800">Termite Resistance</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>100% Proof</td><td class="py-4 text-slate-500">High Risk</td><td class="py-4 text-slate-500">High Risk</td></tr>
-                            <tr><td class="py-4 font-semibold text-slate-800">Fire Class</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>Class 1 FR</td><td class="py-4 text-slate-500">Combustible</td><td class="py-4 text-slate-500">Highly Combustible</td></tr>
-                            <tr><td class="py-4 font-semibold text-slate-800">Dimensional Stability</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>Zero Discrepancy</td><td class="py-4 text-slate-500">Swells with Weather</td><td class="py-4 text-slate-500">Standardized Only</td></tr>
-                            <tr><td class="py-4 font-semibold text-slate-800">Maintenance Cost</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>Zero</td><td class="py-4 text-slate-500">Frequent Polish/Treat</td><td class="py-4 text-slate-500">Repaint Needed</td></tr>
-                            <tr><td class="py-4 font-semibold text-slate-800">Lifespan</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>25+ Years</td><td class="py-4 text-slate-500">7–15 Years</td><td class="py-4 text-slate-500">5–10 Years</td></tr>
+                        <tbody class="text-xs font-light text-slate-300 divide-y divide-white/5">
+                            <tr><td class="py-4 font-semibold text-slate-200">Water Resistance</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>100% Proof</td><td class="py-4 text-slate-500">Absorbs / Warps</td><td class="py-4 text-slate-500">Swells / Delaminates</td></tr>
+                            <tr><td class="py-4 font-semibold text-slate-200">Termite Resistance</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>100% Proof</td><td class="py-4 text-slate-500">High Risk</td><td class="py-4 text-slate-500">High Risk</td></tr>
+                            <tr><td class="py-4 font-semibold text-slate-200">Fire Class</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>Class 1 FR</td><td class="py-4 text-slate-500">Combustible</td><td class="py-4 text-slate-500">Highly Combustible</td></tr>
+                            <tr><td class="py-4 font-semibold text-slate-200">Dimensional Stability</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>Zero Discrepancy</td><td class="py-4 text-slate-500">Swells with Weather</td><td class="py-4 text-slate-500">Standardized Only</td></tr>
+                            <tr><td class="py-4 font-semibold text-slate-200">Maintenance Cost</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>Zero</td><td class="py-4 text-slate-500">Frequent Polish/Treat</td><td class="py-4 text-slate-500">Repaint Needed</td></tr>
+                            <tr><td class="py-4 font-semibold text-slate-200">Lifespan</td><td class="py-4 text-brand-gold font-bold"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-500"></i>25+ Years</td><td class="py-4 text-slate-500">7–15 Years</td><td class="py-4 text-slate-500">5–10 Years</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -396,30 +473,30 @@
     </section>
 
     <!-- ── PRODUCT CATALOGUE (NEW SECTION) ───────────────────── -->
-    <section id="catalogue" class="py-24 bg-white border-b border-slate-200">
+    <section id="catalogue" class="py-24 bg-[#040209] border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Full Product Catalogue</span>
                 <h2 class="text-3xl sm:text-4xl font-serif text-gradient-silver">Browse Our Complete Door Range</h2>
                 <div class="w-12 h-0.5 bg-brand-gold mx-auto mt-4"></div>
-                <p class="text-sm text-slate-600 font-light leading-relaxed">All products available in custom sizes. Thickness, frame width, and finish to order. Call or WhatsApp for pricing.</p>
+                <p class="text-sm text-slate-400 font-light leading-relaxed">All products available in custom sizes. Thickness, frame width, and finish to order. Call or WhatsApp for pricing.</p>
             </div>
 
             <!-- Category Tabs -->
             <div class="flex flex-wrap justify-center gap-3 mb-12" id="cat-tabs">
                 <button onclick="filterCatalogue('all')" class="cat-tab active-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-brand-gold/40 text-brand-gold bg-brand-gold/10 transition" data-cat="all">All Products</button>
-                <button onclick="filterCatalogue('wpc')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-300 text-slate-600 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="wpc">WPC Doors</button>
-                <button onclick="filterCatalogue('wfc')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-300 text-slate-600 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="wfc">WFC Doors & Frames</button>
-                <button onclick="filterCatalogue('pvc')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-300 text-slate-600 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="pvc">PVC Designer</button>
-                <button onclick="filterCatalogue('hardware')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-slate-300 text-slate-600 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="hardware">Hardware</button>
+                <button onclick="filterCatalogue('wpc')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 text-slate-400 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="wpc">WPC Doors</button>
+                <button onclick="filterCatalogue('wfc')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 text-slate-400 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="wfc">WFC Doors & Frames</button>
+                <button onclick="filterCatalogue('pvc')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 text-slate-400 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="pvc">PVC Designer</button>
+                <button onclick="filterCatalogue('hardware')" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 text-slate-400 hover:border-brand-gold/30 hover:text-brand-gold transition" data-cat="hardware">Hardware</button>
             </div>
 
             <!-- Catalogue Grid -->
             <div id="catalogue-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
                 <!-- WPC-01 -->
-                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-goldaccent/30" data-cat="wpc">
-                    <div class="h-52 cat-door-frame bg-white flex items-center justify-center relative p-6">
+                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-white/5 hover:border-brand-goldaccent/30" data-cat="wpc">
+                    <div class="h-52 cat-door-frame bg-[#120d24] flex items-center justify-center relative p-6">
                         <div class="absolute inset-0 bg-gradient-to-tr from-amber-950/40 to-purple-950/30"></div>
                         <svg viewBox="0 0 90 160" class="door-icon h-40 relative z-10 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="3" y="3" width="84" height="154" rx="3" fill="#6b3210" stroke="#d9a05b" stroke-width="1"/>
@@ -434,26 +511,26 @@
                     <div class="p-6 space-y-3">
                         <div class="flex items-start justify-between">
                             <div>
-                                <h3 class="text-base font-serif text-slate-900">Ecoste WPC Door — S-13 Classic</h3>
+                                <h3 class="text-base font-serif text-white">Ecoste WPC Door — S-13 Classic</h3>
                                 <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-widest">ecoste™ Wood Polymer</span>
                             </div>
                         </div>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">Full-body WPC construction with S-13 panel design. Ideal for main entry and bedroom openings. Completely waterproof and termite-resistant.</p>
-                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-200">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Full-body WPC construction with S-13 panel design. Ideal for main entry and bedroom openings. Completely waterproof and termite-resistant.</p>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-white/5">
                             <div><span class="text-slate-500 block">Thickness</span><span class="text-brand-gold font-semibold">30mm / 35mm / 40mm</span></div>
                             <div><span class="text-slate-500 block">Finish</span><span class="text-brand-gold font-semibold">Teak / Walnut / Ash</span></div>
                             <div><span class="text-slate-500 block">Height Range</span><span class="text-brand-gold font-semibold">6'6" to 8'0" custom</span></div>
                             <div><span class="text-slate-500 block">Width Range</span><span class="text-brand-gold font-semibold">2'6" to 4'0" custom</span></div>
                         </div>
                         <a href="https://wa.me/919642585067?text=I%20want%20a%20quote%20for%20Ecoste%20WPC%20Door%20S-13%20Classic." target="_blank"
-                           class="w-full mt-4 py-2.5 bg-slate-100 hover:bg-brand-gold/10 border border-slate-300 hover:border-brand-gold/30 text-xs text-slate-900 font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
+                           class="w-full mt-4 py-2.5 bg-white/5 hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/30 text-xs text-white font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fa-brands fa-whatsapp text-emerald-500"></i> Get Price on WhatsApp
                         </a>
                     </div>
                 </div>
 
                 <!-- WPC-02 -->
-                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-goldaccent/30" data-cat="wpc">
+                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-white/5 hover:border-brand-goldaccent/30" data-cat="wpc">
                     <div class="h-52 cat-door-frame wood-charcoal-grain flex items-center justify-center relative p-6">
                         <div class="absolute inset-0 bg-black/40"></div>
                         <svg viewBox="0 0 90 160" class="door-icon h-40 relative z-10 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -465,30 +542,30 @@
                             <line x1="10" y1="135" x2="80" y2="135" stroke="rgba(217,160,91,0.3)" stroke-width="1"/>
                             <rect x="72" y="90" width="5" height="18" rx="2" fill="#e2e8f0"/>
                         </svg>
-                        <span class="absolute top-3 right-3 bg-slate-700 text-slate-800 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">WPC</span>
+                        <span class="absolute top-3 right-3 bg-slate-700 text-slate-200 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">WPC</span>
                     </div>
                     <div class="p-6 space-y-3">
                         <div>
-                            <h3 class="text-base font-serif text-slate-900">Black Cobra Onyx Series</h3>
-                            <span class="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Black Cobra Engineered</span>
+                            <h3 class="text-base font-serif text-white">Black Cobra Onyx Series</h3>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Black Cobra Engineered</span>
                         </div>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">Contemporary horizontal-line design in charcoal-onyx finish. High-density engineered composite for heavy-use commercial and residential applications.</p>
-                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-200">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Contemporary horizontal-line design in charcoal-onyx finish. High-density engineered composite for heavy-use commercial and residential applications.</p>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-white/5">
                             <div><span class="text-slate-500 block">Thickness</span><span class="text-brand-gold font-semibold">35mm / 40mm</span></div>
                             <div><span class="text-slate-500 block">Finish</span><span class="text-brand-gold font-semibold">Charcoal / Grey</span></div>
                             <div><span class="text-slate-500 block">Use Case</span><span class="text-brand-gold font-semibold">Office / Commercial</span></div>
                             <div><span class="text-slate-500 block">Core</span><span class="text-brand-gold font-semibold">High Density WPC</span></div>
                         </div>
                         <a href="https://wa.me/919642585067?text=I%20want%20a%20quote%20for%20Black%20Cobra%20Onyx%20WPC%20Door." target="_blank"
-                           class="w-full mt-4 py-2.5 bg-slate-100 hover:bg-brand-gold/10 border border-slate-300 hover:border-brand-gold/30 text-xs text-slate-900 font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
+                           class="w-full mt-4 py-2.5 bg-white/5 hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/30 text-xs text-white font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fa-brands fa-whatsapp text-emerald-500"></i> Get Price on WhatsApp
                         </a>
                     </div>
                 </div>
 
                 <!-- WFC-01 -->
-                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-goldaccent/30" data-cat="wfc">
-                    <div class="h-52 cat-door-frame bg-white flex items-center justify-center relative p-4">
+                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-white/5 hover:border-brand-goldaccent/30" data-cat="wfc">
+                    <div class="h-52 cat-door-frame bg-[#1a0f07] flex items-center justify-center relative p-4">
                         <div class="absolute inset-0 bg-gradient-to-tr from-amber-950/50 to-transparent"></div>
                         <svg viewBox="0 0 110 160" class="door-icon h-40 relative z-10 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <!-- Outer frame -->
@@ -506,26 +583,26 @@
                     </div>
                     <div class="p-6 space-y-3">
                         <div>
-                            <h3 class="text-base font-serif text-slate-900">GMG WFC Door + Frame Set</h3>
+                            <h3 class="text-base font-serif text-white">GMG WFC Door + Frame Set</h3>
                             <span class="text-[10px] text-red-400 font-bold uppercase tracking-widest">GMG Premium Custom</span>
                         </div>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">Complete integrated door + frame solution. Wood Fiber Composite door with matching WFC frame. Simplifies installation for builders and contractors.</p>
-                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-200">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Complete integrated door + frame solution. Wood Fiber Composite door with matching WFC frame. Simplifies installation for builders and contractors.</p>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-white/5">
                             <div><span class="text-slate-500 block">Door Thickness</span><span class="text-brand-gold font-semibold">30mm / 35mm</span></div>
                             <div><span class="text-slate-500 block">Frame Width</span><span class="text-brand-gold font-semibold">3" to 6" options</span></div>
                             <div><span class="text-slate-500 block">Frame Type</span><span class="text-brand-gold font-semibold">WFC Composite</span></div>
                             <div><span class="text-slate-500 block">Ideal For</span><span class="text-brand-gold font-semibold">Apartments / Villas</span></div>
                         </div>
                         <a href="https://wa.me/919642585067?text=I%20want%20a%20quote%20for%20GMG%20WFC%20Door%20and%20Frame%20Set." target="_blank"
-                           class="w-full mt-4 py-2.5 bg-slate-100 hover:bg-brand-gold/10 border border-slate-300 hover:border-brand-gold/30 text-xs text-slate-900 font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
+                           class="w-full mt-4 py-2.5 bg-white/5 hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/30 text-xs text-white font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fa-brands fa-whatsapp text-emerald-500"></i> Get Price on WhatsApp
                         </a>
                     </div>
                 </div>
 
                 <!-- WFC-02: Elegant Frames -->
-                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-goldaccent/30" data-cat="wfc">
-                    <div class="h-52 cat-door-frame bg-white flex items-center justify-center relative p-4">
+                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-white/5 hover:border-brand-goldaccent/30" data-cat="wfc">
+                    <div class="h-52 cat-door-frame bg-[#1c1005] flex items-center justify-center relative p-4">
                         <div class="absolute inset-0 bg-gradient-to-br from-amber-900/30 to-transparent"></div>
                         <svg viewBox="0 0 110 160" class="door-icon h-40 relative z-10 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <!-- Wide architrave frame -->
@@ -544,25 +621,25 @@
                     </div>
                     <div class="p-6 space-y-3">
                         <div>
-                            <h3 class="text-base font-serif text-slate-900">Elegant Masonite Arched Panel Door</h3>
+                            <h3 class="text-base font-serif text-white">Elegant Masonite Arched Panel Door</h3>
                             <span class="text-[10px] text-brand-gold font-bold uppercase tracking-widest">Elegant Doors</span>
                         </div>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">Masonite fiber-skin door with arched top panel molding. Classic design for premium villa and luxury apartment main entries. Full WFC frame included.</p>
-                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-200">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Masonite fiber-skin door with arched top panel molding. Classic design for premium villa and luxury apartment main entries. Full WFC frame included.</p>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-white/5">
                             <div><span class="text-slate-500 block">Skin</span><span class="text-brand-gold font-semibold">Masonite Fiber</span></div>
                             <div><span class="text-slate-500 block">Frame Width</span><span class="text-brand-gold font-semibold">4.5" / 5" / 6"</span></div>
                             <div><span class="text-slate-500 block">Style</span><span class="text-brand-gold font-semibold">Arched Top Panel</span></div>
                             <div><span class="text-slate-500 block">Ideal For</span><span class="text-brand-gold font-semibold">Villas / Main Entry</span></div>
                         </div>
                         <a href="https://wa.me/919642585067?text=I%20want%20a%20quote%20for%20Elegant%20Masonite%20Arched%20Door." target="_blank"
-                           class="w-full mt-4 py-2.5 bg-slate-100 hover:bg-brand-gold/10 border border-slate-300 hover:border-brand-gold/30 text-xs text-slate-900 font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
+                           class="w-full mt-4 py-2.5 bg-white/5 hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/30 text-xs text-white font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fa-brands fa-whatsapp text-emerald-500"></i> Get Price on WhatsApp
                         </a>
                     </div>
                 </div>
 
                 <!-- PVC-01 -->
-                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-goldaccent/30" data-cat="pvc">
+                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-white/5 hover:border-brand-goldaccent/30" data-cat="pvc">
                     <div class="h-52 cat-door-frame wood-rose-grain flex items-center justify-center relative p-4">
                         <div class="absolute inset-0 bg-black/45"></div>
                         <svg viewBox="0 0 90 160" class="door-icon h-40 relative z-10 drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -577,26 +654,26 @@
                     </div>
                     <div class="p-6 space-y-3">
                         <div>
-                            <h3 class="text-base font-serif text-slate-900">PVC S-106 Imperial Rosewood</h3>
+                            <h3 class="text-base font-serif text-white">PVC S-106 Imperial Rosewood</h3>
                             <span class="text-[10px] text-rose-400 font-bold uppercase tracking-widest">Ecoste / Elegant PVC</span>
                         </div>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">High-definition PVC skin with S-106 classic paneling and deep rosewood laminate. Zero maintenance, scratch-resistant surface. Popular for bedrooms and bathrooms.</p>
-                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-200">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">High-definition PVC skin with S-106 classic paneling and deep rosewood laminate. Zero maintenance, scratch-resistant surface. Popular for bedrooms and bathrooms.</p>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-white/5">
                             <div><span class="text-slate-500 block">Design</span><span class="text-brand-gold font-semibold">S-106 Classic Panel</span></div>
                             <div><span class="text-slate-500 block">Finish</span><span class="text-brand-gold font-semibold">Rosewood Laminate</span></div>
                             <div><span class="text-slate-500 block">Thickness</span><span class="text-brand-gold font-semibold">25mm / 30mm</span></div>
                             <div><span class="text-slate-500 block">Use</span><span class="text-brand-gold font-semibold">Bedroom / Bathroom</span></div>
                         </div>
                         <a href="https://wa.me/919642585067?text=I%20want%20a%20quote%20for%20PVC%20S-106%20Rosewood%20door." target="_blank"
-                           class="w-full mt-4 py-2.5 bg-slate-100 hover:bg-brand-gold/10 border border-slate-300 hover:border-brand-gold/30 text-xs text-slate-900 font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
+                           class="w-full mt-4 py-2.5 bg-white/5 hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/30 text-xs text-white font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fa-brands fa-whatsapp text-emerald-500"></i> Get Price on WhatsApp
                         </a>
                     </div>
                 </div>
 
                 <!-- HARDWARE-01 -->
-                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-goldaccent/30" data-cat="hardware">
-                    <div class="h-52 cat-door-frame bg-white flex items-center justify-center relative p-4">
+                <div class="door-card catalogue-item luxury-glass rounded-2xl overflow-hidden border border-white/5 hover:border-brand-goldaccent/30" data-cat="hardware">
+                    <div class="h-52 cat-door-frame bg-[#0c0c14] flex items-center justify-center relative p-4">
                         <div class="absolute inset-0 bg-gradient-to-tr from-slate-900/60 to-transparent"></div>
                         <!-- Hardware visual -->
                         <div class="relative z-10 flex flex-col items-center gap-4">
@@ -620,26 +697,26 @@
                             </svg>
                             <div class="flex gap-3">
                                 <div class="w-8 h-8 bg-amber-700/60 rounded border border-amber-500/30 flex items-center justify-center text-amber-300 text-[10px] font-bold">AB</div>
-                                <div class="w-8 h-8 bg-slate-600/60 rounded border border-slate-400/30 flex items-center justify-center text-slate-700 text-[10px] font-bold">SS</div>
+                                <div class="w-8 h-8 bg-slate-600/60 rounded border border-slate-400/30 flex items-center justify-center text-slate-300 text-[10px] font-bold">SS</div>
                                 <div class="w-8 h-8 bg-yellow-700/60 rounded border border-yellow-500/30 flex items-center justify-center text-yellow-300 text-[10px] font-bold">PB</div>
                             </div>
                         </div>
-                        <span class="absolute top-3 right-3 bg-slate-700 text-slate-800 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">SPIDER®</span>
+                        <span class="absolute top-3 right-3 bg-slate-700 text-slate-200 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">SPIDER®</span>
                     </div>
                     <div class="p-6 space-y-3">
                         <div>
-                            <h3 class="text-base font-serif text-slate-900">Spider® Premium Hardware Range</h3>
-                            <span class="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Spider Safety Hardware</span>
+                            <h3 class="text-base font-serif text-white">Spider® Premium Hardware Range</h3>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Spider Safety Hardware</span>
                         </div>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">Full hardware supply: multi-bullet deadbolt locks, lever handles, tower bolts, hinges, door closers, and floor springs. Available in SS, AB (Antique Brass), and PB (Polished Brass) finishes.</p>
-                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-200">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Full hardware supply: multi-bullet deadbolt locks, lever handles, tower bolts, hinges, door closers, and floor springs. Available in SS, AB (Antique Brass), and PB (Polished Brass) finishes.</p>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-white/5">
                             <div><span class="text-slate-500 block">Finishes</span><span class="text-brand-gold font-semibold">SS / AB / PB</span></div>
                             <div><span class="text-slate-500 block">Lock Types</span><span class="text-brand-gold font-semibold">Mortise / Deadbolt</span></div>
                             <div><span class="text-slate-500 block">Hinges</span><span class="text-brand-gold font-semibold">SS Ball Bearing</span></div>
                             <div><span class="text-slate-500 block">Closers</span><span class="text-brand-gold font-semibold">Auto / Floor Spring</span></div>
                         </div>
                         <a href="https://wa.me/919642585067?text=I%20want%20a%20quote%20for%20Spider%20Hardware%20fittings." target="_blank"
-                           class="w-full mt-4 py-2.5 bg-slate-100 hover:bg-brand-gold/10 border border-slate-300 hover:border-brand-gold/30 text-xs text-slate-900 font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
+                           class="w-full mt-4 py-2.5 bg-white/5 hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/30 text-xs text-white font-semibold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 transition">
                             <i class="fa-brands fa-whatsapp text-emerald-500"></i> Get Price on WhatsApp
                         </a>
                     </div>
@@ -649,7 +726,7 @@
 
             <!-- CTA below catalogue -->
             <div class="text-center mt-12 p-8 rounded-2xl border border-brand-gold/15 bg-brand-gold/5">
-                <p class="text-slate-700 text-sm mb-4">Don't see your exact requirement? We supply custom sizes, non-standard frame widths, and special laminate finishes on request.</p>
+                <p class="text-slate-300 text-sm mb-4">Don't see your exact requirement? We supply custom sizes, non-standard frame widths, and special laminate finishes on request.</p>
                 <a href="https://wa.me/919642585067?text=I%20have%20a%20custom%20door%20requirement%20and%20need%20pricing." target="_blank"
                    class="inline-flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-goldaccent text-neutral-950 font-bold text-xs tracking-widest uppercase px-8 py-4 rounded-lg shadow-xl transition-all hover:shadow-brand-gold/20">
                     <i class="fa-brands fa-whatsapp text-lg"></i> Request Custom Specification
@@ -659,20 +736,20 @@
     </section>
 
     <!-- ── COST ESTIMATOR ─────────────────────────────────────── -->
-    <section id="customizer" class="py-24 relative overflow-hidden border-b border-slate-200">
+    <section id="customizer" class="py-24 relative overflow-hidden border-b border-white/5">
         <div id="estimator-anchor" class="absolute -top-24"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Instant Price Intelligence</span>
                 <h2 class="text-3xl sm:text-4xl font-serif text-gradient-silver">Interactive Door Cost Estimator</h2>
                 <div class="w-12 h-0.5 bg-brand-gold mx-auto mt-4"></div>
-                <p class="text-sm text-slate-600 font-light leading-relaxed">Configure your door specs and get an instant cost range. Forward your configuration directly to our project team on WhatsApp.</p>
+                <p class="text-sm text-slate-400 font-light leading-relaxed">Configure your door specs and get an instant cost range. Forward your configuration directly to our project team on WhatsApp.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
                 <!-- Live Preview -->
-                <div class="lg:col-span-5 flex flex-col items-center justify-center luxury-glass p-8 rounded-3xl border border-brand-gold/30 shadow-2xl min-h-[480px]">
-                    <h3 class="text-xs uppercase tracking-[0.2em] text-slate-600 font-semibold mb-6">Live Door Preview</h3>
+                <div class="lg:col-span-5 flex flex-col items-center justify-center luxury-glass p-8 rounded-3xl border border-brand-gold/10 shadow-2xl min-h-[480px]">
+                    <h3 class="text-xs uppercase tracking-[0.2em] text-slate-400 font-semibold mb-6">Live Door Preview</h3>
                     <div class="relative w-56 h-[340px] bg-neutral-950 rounded-xl p-2.5 border-2 border-[#120d24] shadow-inner flex items-center justify-center transition-all duration-500">
                         <div class="absolute inset-0 border-[10px] border-amber-950/50 rounded-xl pointer-events-none z-20"></div>
                         <div id="render-door-body" class="w-full h-full rounded-sm wood-teak-grain flex flex-col justify-between p-4 relative overflow-hidden transition-all duration-500 shadow-xl">
@@ -690,23 +767,23 @@
                         </div>
                     </div>
                     <div class="mt-6 w-full max-w-xs text-xs flex justify-between items-center">
-                        <span class="text-slate-600">Style:</span>
+                        <span class="text-slate-400">Style:</span>
                         <span id="canvas-style-tag" class="text-brand-gold font-semibold uppercase">Teak Gold + S-13</span>
                     </div>
                 </div>
 
                 <!-- Form -->
-                <div class="lg:col-span-7 luxury-glass p-8 sm:p-10 rounded-3xl border border-brand-gold/30 flex flex-col justify-between shadow-2xl">
+                <div class="lg:col-span-7 luxury-glass p-8 sm:p-10 rounded-3xl border border-brand-gold/10 flex flex-col justify-between shadow-2xl">
                     <form id="calculator-form" onsubmit="event.preventDefault();" class="space-y-6">
-                        <div class="border-b border-slate-200 pb-4">
-                            <h3 class="text-lg font-serif text-slate-900">Configure & Price Instantly</h3>
-                            <p class="text-xs text-slate-600 mt-1">Adjust options below — price updates in real time.</p>
+                        <div class="border-b border-white/5 pb-4">
+                            <h3 class="text-lg font-serif text-slate-100">Configure & Price Instantly</h3>
+                            <p class="text-xs text-slate-400 mt-1">Adjust options below — price updates in real time.</p>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
                                 <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold block">1. Product Type</label>
-                                <select id="est-product" onchange="updateEstProduct()" class="w-full p-3.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                <select id="est-product" onchange="updateEstProduct()" class="w-full p-3.5 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                                     <option value="WPC Customized Door">WPC Customized Door</option>
                                     <option value="WFC Doors & Frames">WFC Door + Frame Set</option>
                                     <option value="PVC Designer Door">PVC Designer Door</option>
@@ -715,7 +792,7 @@
                             </div>
                             <div class="space-y-1">
                                 <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold block">2. Finish / Design Style</label>
-                                <select id="est-style" onchange="syncCanvasSelections()" class="w-full p-3.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                <select id="est-style" onchange="syncCanvasSelections()" class="w-full p-3.5 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                                     <option value="teak-modern">Golden Teak + S-13 Panel</option>
                                     <option value="charcoal-lines">Charcoal Onyx + Lines</option>
                                     <option value="rose-classic">Imperial Rosewood + S-106</option>
@@ -727,7 +804,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1">
                                 <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold block">3. Thickness</label>
-                                <select id="est-thickness" onchange="runQuoteCalculation()" class="w-full p-3.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                <select id="est-thickness" onchange="runQuoteCalculation()" class="w-full p-3.5 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                                     <option value="30mm">30mm – Standard Residential</option>
                                     <option value="25mm">25mm – Lightweight Bathroom</option>
                                     <option value="35mm">35mm – Heavy Duty Bedroom</option>
@@ -736,7 +813,7 @@
                             </div>
                             <div class="space-y-1">
                                 <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold block">4. Brand Partner</label>
-                                <select id="est-brand" onchange="runQuoteCalculation()" class="w-full p-3.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                <select id="est-brand" onchange="runQuoteCalculation()" class="w-full p-3.5 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                                     <option value="Elegant Doors">Elegant Doors</option>
                                     <option value="Ecoste WPC">Ecoste™ Wood Polymer</option>
                                     <option value="Black Cobra">Black Cobra Engineered</option>
@@ -750,10 +827,10 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                             <div class="space-y-1">
                                 <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold block">5. Quantity (Pcs)</label>
-                                <input type="number" id="est-qty" value="1" min="1" oninput="runQuoteCalculation()" class="w-full p-3 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                <input type="number" id="est-qty" value="1" min="1" oninput="runQuoteCalculation()" class="w-full p-3 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                             </div>
                             <div class="space-y-1 pt-3.5">
-                                <label class="flex items-center gap-2.5 p-3.5 rounded-lg border border-slate-300 bg-slate-50 hover:bg-slate-100 cursor-pointer text-xs transition">
+                                <label class="flex items-center gap-2.5 p-3.5 rounded-lg border border-white/10 bg-white/[0.01] hover:bg-white/[0.03] cursor-pointer text-xs transition">
                                     <input type="checkbox" id="est-lock" checked onchange="runQuoteCalculation()" class="accent-brand-gold w-4 h-4 rounded">
                                     Include Spider Lock & Hardware
                                 </label>
@@ -764,20 +841,20 @@
                         <div class="p-6 rounded-2xl bg-gradient-to-tr from-[#161131] to-[#251d4d] border border-brand-gold/15 space-y-3">
                             <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
                                 <div>
-                                    <span class="text-[10px] uppercase tracking-wider text-slate-600 block font-semibold">Estimated Wholesale Range</span>
+                                    <span class="text-[10px] uppercase tracking-wider text-slate-400 block font-semibold">Estimated Wholesale Range</span>
                                     <p class="text-[10px] text-slate-500 font-light mt-0.5">Excl. transport, installation & taxes</p>
                                 </div>
                                 <span id="est-final-range" class="text-3xl sm:text-4xl font-bold font-serif text-gradient-gold">₹4,800 – ₹5,800</span>
                             </div>
-                            <p class="text-[10px] text-slate-500 border-t border-slate-200 pt-3">💡 Bulk orders of 10+ units qualify for special contractor pricing. Mention this on WhatsApp.</p>
+                            <p class="text-[10px] text-slate-500 border-t border-white/5 pt-3">💡 Bulk orders of 10+ units qualify for special contractor pricing. Mention this on WhatsApp.</p>
                         </div>
 
                         <!-- Lead capture -->
                         <div class="space-y-4">
-                            <h4 class="text-xs font-bold uppercase text-slate-800 tracking-wider">Fast-Track Your Quote</h4>
+                            <h4 class="text-xs font-bold uppercase text-slate-200 tracking-wider">Fast-Track Your Quote</h4>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <input type="text" id="cust-name" placeholder="Your Name / Firm Name" class="w-full p-3.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
-                                <input type="text" id="cust-phone" placeholder="Phone / Site Location" class="w-full p-3.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                <input type="text" id="cust-name" placeholder="Your Name / Firm Name" class="w-full p-3.5 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
+                                <input type="text" id="cust-phone" placeholder="Phone / Site Location" class="w-full p-3.5 rounded-lg border border-white/10 bg-[#0e0b1d] text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                             </div>
                         </div>
 
@@ -791,18 +868,18 @@
     </section>
 
     <!-- ── PROJECT GALLERY ────────────────────────────────────── -->
-    <section id="gallery" class="py-24 bg-white border-b border-slate-200">
+    <section id="gallery" class="py-24 bg-[#040209] border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Installed Project Gallery</span>
                 <h2 class="text-3xl sm:text-4xl font-serif text-gradient-silver">From Showroom to Site — Real Installations</h2>
                 <div class="w-12 h-0.5 bg-brand-gold mx-auto mt-4"></div>
-                <p class="text-sm text-slate-600 font-light leading-relaxed">Projects delivered across Hanamkonda, Warangal Urban, and Hyderabad corridors.</p>
+                <p class="text-sm text-slate-400 font-light leading-relaxed">Projects delivered across Hanamkonda, Warangal Urban, and Hyderabad corridors.</p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <!-- Gallery cards with door renders (replace divs with actual project photos when available) -->
-                <div class="gallery-item rounded-2xl overflow-hidden relative border border-slate-200 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 3/4;">
+                <div class="gallery-item rounded-2xl overflow-hidden relative border border-white/5 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 3/4;">
                     <div class="absolute inset-0 wood-teak-grain opacity-80"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#05030b] via-transparent to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -814,12 +891,12 @@
                         </svg>
                     </div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80">
-                        <p class="text-xs font-bold text-slate-900 uppercase tracking-widest">WPC Main Entry</p>
-                        <p class="text-[10px] text-slate-600">Villa Project — University Road</p>
+                        <p class="text-xs font-bold text-white uppercase tracking-widest">WPC Main Entry</p>
+                        <p class="text-[10px] text-slate-400">Villa Project — University Road</p>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-2xl overflow-hidden relative border border-slate-200 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer md:row-span-2" style="aspect-ratio: 3/4;">
+                <div class="gallery-item rounded-2xl overflow-hidden relative border border-white/5 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer md:row-span-2" style="aspect-ratio: 3/4;">
                     <div class="absolute inset-0 wood-charcoal-grain opacity-85"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#05030b] via-transparent to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -834,12 +911,12 @@
                         </svg>
                     </div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80">
-                        <p class="text-xs font-bold text-slate-900 uppercase tracking-widest">Black Cobra Onyx</p>
-                        <p class="text-[10px] text-slate-600">Office Complex — Hanamkonda</p>
+                        <p class="text-xs font-bold text-white uppercase tracking-widest">Black Cobra Onyx</p>
+                        <p class="text-[10px] text-slate-400">Office Complex — Hanamkonda</p>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-2xl overflow-hidden relative border border-slate-200 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 3/4;">
+                <div class="gallery-item rounded-2xl overflow-hidden relative border border-white/5 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 3/4;">
                     <div class="absolute inset-0 wood-rose-grain opacity-80"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#05030b] via-transparent to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -852,12 +929,12 @@
                         </svg>
                     </div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80">
-                        <p class="text-xs font-bold text-slate-900 uppercase tracking-widest">PVC S-106 Rosewood</p>
-                        <p class="text-[10px] text-slate-600">Apartment — Bypass Road</p>
+                        <p class="text-xs font-bold text-white uppercase tracking-widest">PVC S-106 Rosewood</p>
+                        <p class="text-[10px] text-slate-400">Apartment — Bypass Road</p>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-2xl overflow-hidden relative border border-slate-200 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 3/4;">
+                <div class="gallery-item rounded-2xl overflow-hidden relative border border-white/5 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 3/4;">
                     <div class="absolute inset-0 wood-ivory-grain opacity-75"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#05030b] via-transparent to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -868,12 +945,12 @@
                         </svg>
                     </div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80">
-                        <p class="text-xs font-bold text-slate-900 uppercase tracking-widest">Ivory Flat Premium</p>
-                        <p class="text-[10px] text-slate-600">Luxury Villa — Necklace Road</p>
+                        <p class="text-xs font-bold text-white uppercase tracking-widest">Ivory Flat Premium</p>
+                        <p class="text-[10px] text-slate-400">Luxury Villa — Necklace Road</p>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-2xl overflow-hidden relative col-span-2 md:col-span-1 border border-slate-200 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 16/9;">
+                <div class="gallery-item rounded-2xl overflow-hidden relative col-span-2 md:col-span-1 border border-white/5 hover:border-brand-gold/30 transition-all duration-300 group cursor-pointer" style="aspect-ratio: 16/9;">
                     <div class="absolute inset-0 bg-gradient-to-tr from-amber-950/30 to-[#120d24]"></div>
                     <div class="absolute inset-0 flex items-center justify-center gap-6 px-6">
                         <!-- Small door + frame unit -->
@@ -887,7 +964,7 @@
                         </svg>
                         <div class="text-left">
                             <p class="text-brand-gold font-serif text-base">Elegant WFC Set</p>
-                            <p class="text-slate-600 text-xs mt-1">40 Units supplied</p>
+                            <p class="text-slate-400 text-xs mt-1">40 Units supplied</p>
                             <p class="text-slate-500 text-[10px]">Residential Colony — Warangal Urban</p>
                         </div>
                     </div>
@@ -900,7 +977,7 @@
     </section>
 
     <!-- ── SERVICES ───────────────────────────────────────────── -->
-    <section id="guarantees" class="py-24 border-b border-slate-200">
+    <section id="guarantees" class="py-24 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">End-to-End Service</span>
@@ -908,27 +985,27 @@
                 <div class="w-12 h-0.5 bg-brand-gold mx-auto mt-4"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="luxury-glass p-8 rounded-2xl border border-slate-200 space-y-4">
+                <div class="luxury-glass p-8 rounded-2xl border border-white/5 space-y-4">
                     <div class="w-12 h-12 rounded-xl bg-brand-gold/15 flex items-center justify-center text-brand-gold text-xl"><i class="fa-solid fa-boxes-stacked"></i></div>
-                    <h3 class="text-lg font-serif text-slate-900">Direct Wholesale Supply</h3>
-                    <p class="text-xs text-slate-600 font-light leading-relaxed">Authorized distributor for Elegant, Ecoste™, and GMG. Direct access to manufacturing batches with quality-controlled specifications.</p>
+                    <h3 class="text-lg font-serif text-white">Direct Wholesale Supply</h3>
+                    <p class="text-xs text-slate-400 font-light leading-relaxed">Authorized distributor for Elegant, Ecoste™, and GMG. Direct access to manufacturing batches with quality-controlled specifications.</p>
                 </div>
-                <div class="luxury-glass p-8 rounded-2xl border border-slate-200 space-y-4">
+                <div class="luxury-glass p-8 rounded-2xl border border-white/5 space-y-4">
                     <div class="w-12 h-12 rounded-xl bg-brand-gold/15 flex items-center justify-center text-brand-gold text-xl"><i class="fa-solid fa-truck-ramp-box"></i></div>
-                    <h3 class="text-lg font-serif text-slate-900">Damage-Free Transit</h3>
-                    <p class="text-xs text-slate-600 font-light leading-relaxed">Specially packed delivery to Warangal, Hanamkonda, and Hyderabad corridors. No corner cracks, split veneer, or lamination scratches.</p>
+                    <h3 class="text-lg font-serif text-white">Damage-Free Transit</h3>
+                    <p class="text-xs text-slate-400 font-light leading-relaxed">Specially packed delivery to Warangal, Hanamkonda, and Hyderabad corridors. No corner cracks, split veneer, or lamination scratches.</p>
                 </div>
-                <div class="luxury-glass p-8 rounded-2xl border border-slate-200 space-y-4">
+                <div class="luxury-glass p-8 rounded-2xl border border-white/5 space-y-4">
                     <div class="w-12 h-12 rounded-xl bg-brand-gold/15 flex items-center justify-center text-brand-gold text-xl"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-                    <h3 class="text-lg font-serif text-slate-900">Precision Site Installation</h3>
-                    <p class="text-xs text-slate-600 font-light leading-relaxed">Trained carpentry partners for high-density profiles, mortise lock pockets, floor springs, and squeak-free alignment.</p>
+                    <h3 class="text-lg font-serif text-white">Precision Site Installation</h3>
+                    <p class="text-xs text-slate-400 font-light leading-relaxed">Trained carpentry partners for high-density profiles, mortise lock pockets, floor springs, and squeak-free alignment.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ── TESTIMONIALS ───────────────────────────────────────── -->
-    <section id="testimonials" class="py-24 bg-white border-b border-slate-200">
+    <section id="testimonials" class="py-24 bg-[#040209] border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Client Reviews</span>
@@ -937,27 +1014,27 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="luxury-glass p-8 rounded-2xl border border-brand-gold/30 space-y-4">
+                <div class="luxury-glass p-8 rounded-2xl border border-brand-gold/10 space-y-4">
                     <div class="text-brand-gold flex gap-1 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="text-xs text-slate-700 leading-relaxed font-light italic">"For our residential apartments on the bypass corridor, waterproof door frames on budget was a constraint. Windoor's Ecoste WPC frames are completely warp-free and termite-resistant. Our go-to partner."</p>
-                    <div class="pt-3 border-t border-slate-200">
-                        <h4 class="text-xs font-bold uppercase text-slate-800">Srikant Reddy</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed font-light italic">"For our residential apartments on the bypass corridor, waterproof door frames on budget was a constraint. Windoor's Ecoste WPC frames are completely warp-free and termite-resistant. Our go-to partner."</p>
+                    <div class="pt-3 border-t border-white/5">
+                        <h4 class="text-xs font-bold uppercase text-slate-200">Srikant Reddy</h4>
                         <span class="text-[9px] uppercase tracking-wider text-slate-500">Chief Contractor, Sai Teja Infrastructure, Hanamkonda</span>
                     </div>
                 </div>
-                <div class="luxury-glass p-8 rounded-2xl border border-brand-gold/30 space-y-4">
+                <div class="luxury-glass p-8 rounded-2xl border border-brand-gold/10 space-y-4">
                     <div class="text-brand-gold flex gap-1 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="text-xs text-slate-700 leading-relaxed font-light italic">"For premium villas on University Road, we needed modern aesthetic with zero maintenance. Windoor's designer PVC doors and Spider handles integrated elegance and security perfectly. Highly recommended!"</p>
-                    <div class="pt-3 border-t border-slate-200">
-                        <h4 class="text-xs font-bold uppercase text-slate-800">Aranya Prasad</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed font-light italic">"For premium villas on University Road, we needed modern aesthetic with zero maintenance. Windoor's designer PVC doors and Spider handles integrated elegance and security perfectly. Highly recommended!"</p>
+                    <div class="pt-3 border-t border-white/5">
+                        <h4 class="text-xs font-bold uppercase text-slate-200">Aranya Prasad</h4>
                         <span class="text-[9px] uppercase tracking-wider text-slate-500">Principal Interior Designer, Aranya Studio, Warangal</span>
                     </div>
                 </div>
-                <div class="luxury-glass p-8 rounded-2xl border border-brand-gold/30 space-y-4">
+                <div class="luxury-glass p-8 rounded-2xl border border-brand-gold/10 space-y-4">
                     <div class="text-brand-gold flex gap-1 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
-                    <p class="text-xs text-slate-700 leading-relaxed font-light italic">"Windoor supplied all 52 doors for our commercial complex. Delivery was on schedule, packaging was excellent, no damage. The GMG WFC frame sets were perfectly sized. Will use again for our next project."</p>
-                    <div class="pt-3 border-t border-slate-200">
-                        <h4 class="text-xs font-bold uppercase text-slate-800">Venkat Rao</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed font-light italic">"Windoor supplied all 52 doors for our commercial complex. Delivery was on schedule, packaging was excellent, no damage. The GMG WFC frame sets were perfectly sized. Will use again for our next project."</p>
+                    <div class="pt-3 border-t border-white/5">
+                        <h4 class="text-xs font-bold uppercase text-slate-200">Venkat Rao</h4>
                         <span class="text-[9px] uppercase tracking-wider text-slate-500">Project Manager, Naga Constructions, Warangal</span>
                     </div>
                 </div>
@@ -966,7 +1043,7 @@
     </section>
 
     <!-- ── FAQ ────────────────────────────────────────────────── -->
-    <section id="faq" class="py-24 border-b border-slate-200">
+    <section id="faq" class="py-24 border-b border-white/5">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Common Questions</span>
@@ -981,7 +1058,7 @@
     </section>
 
     <!-- ── CONTACT + MAP ──────────────────────────────────────── -->
-    <section id="contact" class="py-24 bg-white border-t border-slate-200">
+    <section id="contact" class="py-24 bg-[#030206] border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
 
@@ -989,40 +1066,38 @@
                 <div class="lg:col-span-5 space-y-8 flex flex-col justify-between">
                     <div class="space-y-6">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-brand-gold to-brand-goldaccent p-[1px]">
-                                <div class="w-full h-full bg-white rounded-lg flex items-center justify-center font-serif text-lg font-bold text-brand-gold">W</div>
-                            </div>
+                            <img src="assets/images/logo.png" alt="Windoor Constructions" class="w-12 h-12 object-contain bg-slate-50 p-1.5 rounded-xl border border-brand-gold/30 shadow-lg shadow-brand-gold/10 hover:scale-105 transition-transform" />
                             <div>
-                                <span class="text-xl font-bold tracking-[0.25em] text-slate-900 font-serif uppercase leading-none block">Windoor</span>
+                                <span class="text-xl font-bold tracking-[0.25em] text-white font-serif uppercase leading-none block">Windoor</span>
                                 <span class="text-[9px] tracking-[0.4em] text-brand-goldaccent uppercase font-medium">Constructions</span>
                             </div>
                         </div>
                         <h3 class="text-2xl font-serif text-gradient-silver">Hanamkonda Main Showroom</h3>
-                        <p class="text-xs text-slate-600 font-light leading-relaxed">Visit our showroom to browse live samples of WPC frames, lamination patterns, and hardware. Beside Raghavendra Poly Clinic.</p>
+                        <p class="text-xs text-slate-400 font-light leading-relaxed">Visit our showroom to browse live samples of WPC frames, lamination patterns, and hardware. Beside Raghavendra Poly Clinic.</p>
                     </div>
 
                     <div class="space-y-4 text-xs">
-                        <div class="flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50">
+                        <div class="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.01]">
                             <div class="w-10 h-10 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold text-lg shrink-0"><i class="fa-solid fa-location-dot"></i></div>
                             <div>
-                                <h4 class="font-bold text-slate-800">Main Office & Showroom</h4>
-                                <p class="text-slate-600 leading-relaxed font-light mt-1">#3-9-517, Beside Raghavendra Poly Clinic,<br>Reddy Colony, Kakatiya University Road,<br>Hanamkonda, Warangal – 506001, Telangana</p>
+                                <h4 class="font-bold text-slate-200">Main Office & Showroom</h4>
+                                <p class="text-slate-400 leading-relaxed font-light mt-1">#3-9-517, Beside Raghavendra Poly Clinic,<br>Reddy Colony, Kakatiya University Road,<br>Hanamkonda, Warangal – 506001, Telangana</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50">
+                        <div class="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.01]">
                             <div class="w-10 h-10 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold text-lg shrink-0"><i class="fa-solid fa-phone"></i></div>
                             <div>
-                                <h4 class="font-bold text-slate-800">Consultation Lines</h4>
-                                <a href="tel:+919642585067" class="text-slate-600 font-light hover:text-brand-gold transition block mt-1">+91 9642585067</a>
-                                <a href="tel:+918686999452" class="text-slate-600 font-light hover:text-brand-gold transition block">+91 8686999452</a>
-                                <a href="mailto:windoorconstructions@gmail.com" class="text-slate-600 font-light hover:text-brand-gold transition block">windoorconstructions@gmail.com</a>
+                                <h4 class="font-bold text-slate-200">Consultation Lines</h4>
+                                <a href="tel:+919642585067" class="text-slate-400 font-light hover:text-brand-gold transition block mt-1">+91 9642585067</a>
+                                <a href="tel:+918686999452" class="text-slate-400 font-light hover:text-brand-gold transition block">+91 8686999452</a>
+                                <a href="mailto:windoorconstructions@gmail.com" class="text-slate-400 font-light hover:text-brand-gold transition block">windoorconstructions@gmail.com</a>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50">
+                        <div class="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.01]">
                             <div class="w-10 h-10 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold text-lg shrink-0"><i class="fa-solid fa-clock"></i></div>
                             <div>
-                                <h4 class="font-bold text-slate-800">Opening Hours</h4>
-                                <p class="text-slate-600 font-light mt-1">Monday – Saturday: 10:00 AM – 8:00 PM</p>
+                                <h4 class="font-bold text-slate-200">Opening Hours</h4>
+                                <p class="text-slate-400 font-light mt-1">Monday – Saturday: 10:00 AM – 8:00 PM</p>
                                 <p class="text-slate-500 font-light">Sunday: Closed (Call for site visits)</p>
                             </div>
                         </div>
@@ -1031,25 +1106,25 @@
 
                 <!-- Right: Form + Embedded Map -->
                 <div class="lg:col-span-7 flex flex-col gap-6">
-                    <div class="luxury-glass p-8 rounded-3xl border border-slate-300 shadow-2xl">
+                    <div class="luxury-glass p-8 rounded-3xl border border-white/10 shadow-2xl">
                         <form id="contact-showroom-form" onsubmit="handleShowroomSubmit(event)" class="space-y-5">
-                            <div class="border-b border-slate-200 pb-4">
+                            <div class="border-b border-white/5 pb-4">
                                 <h4 class="text-xs uppercase tracking-[0.2em] text-brand-gold font-bold">Connect with our Design Desk</h4>
-                                <p class="text-[11px] text-slate-600 mt-1">Specify sizing, frame specs, or site details for a fast quote.</p>
+                                <p class="text-[11px] text-slate-400 mt-1">Specify sizing, frame specs, or site details for a fast quote.</p>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="space-y-1">
                                     <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Your Name</label>
-                                    <input type="text" id="contact-name" required class="w-full p-3 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                    <input type="text" id="contact-name" required class="w-full p-3 rounded-lg border border-white/10 bg-[#0e0b1d]/80 text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                                 </div>
                                 <div class="space-y-1">
                                     <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Contact Number</label>
-                                    <input type="tel" id="contact-phone" required class="w-full p-3 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold">
+                                    <input type="tel" id="contact-phone" required class="w-full p-3 rounded-lg border border-white/10 bg-[#0e0b1d]/80 text-xs text-slate-200 focus:outline-none focus:border-brand-gold">
                                 </div>
                             </div>
                             <div class="space-y-1">
                                 <label class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Project Details / Specs / Location</label>
-                                <textarea id="contact-message" rows="3" required class="w-full p-3 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 focus:outline-none focus:border-brand-gold" placeholder="e.g. Need 4.5 inch WFC frames + laminated PVC doors for 20-unit apartment in Hanamkonda..."></textarea>
+                                <textarea id="contact-message" rows="3" required class="w-full p-3 rounded-lg border border-white/10 bg-[#0e0b1d]/80 text-xs text-slate-200 focus:outline-none focus:border-brand-gold" placeholder="e.g. Need 4.5 inch WFC frames + laminated PVC doors for 20-unit apartment in Hanamkonda..."></textarea>
                             </div>
                             <button type="submit" class="w-full py-4 bg-gradient-to-r from-brand-gold to-brand-goldaccent hover:from-brand-goldaccent hover:to-brand-gold text-neutral-950 text-xs tracking-widest font-bold uppercase rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg">
                                 Send Consultation Request <i class="fa-solid fa-paper-plane"></i>
@@ -1058,7 +1133,7 @@
                     </div>
 
                     <!-- Real Google Maps Embed -->
-                    <div class="rounded-2xl overflow-hidden border border-slate-300 h-52 shadow-2xl">
+                    <div class="rounded-2xl overflow-hidden border border-white/10 h-52 shadow-2xl">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.3622!2d79.5720!3d18.0018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bccea4aba50b02d%3A0x1!2sReddy+Colony%2C+Hanamkonda%2C+Warangal%2C+Telangana+506001!5e0!3m2!1sen!2sin!4v1000000000000"
                             width="100%"
@@ -1079,9 +1154,9 @@
     </section>
 
     <!-- ── FOOTER ─────────────────────────────────────────────── -->
-    <footer class="bg-white text-slate-600 py-12 border-t border-slate-200 text-xs text-center font-light">
+    <footer class="bg-[#020104] text-slate-600 py-12 border-t border-white/5 text-xs text-center font-light">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <div class="flex flex-wrap justify-center gap-6 text-[10px] uppercase tracking-widest text-slate-600 font-semibold">
+            <div class="flex flex-wrap justify-center gap-6 text-[10px] uppercase tracking-widest text-slate-400 font-semibold">
                 <a href="#about" class="hover:text-brand-gold">Brand</a>
                 <a href="#whywpc" class="hover:text-brand-gold">Why WPC?</a>
                 <a href="#catalogue" class="hover:text-brand-gold">Catalogue</a>
@@ -1099,10 +1174,10 @@
 
     <!-- ── SUCCESS MODAL ──────────────────────────────────────── -->
     <div id="status-modal" class="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="luxury-glass p-8 rounded-2xl w-full max-w-sm text-center border border-brand-gold/40 shadow-2xl space-y-4 mx-4">
+        <div class="luxury-glass p-8 rounded-2xl w-full max-w-sm text-center border border-brand-gold/20 shadow-2xl space-y-4 mx-4">
             <div class="w-16 h-16 rounded-full bg-brand-gold/10 text-brand-gold mx-auto flex items-center justify-center text-3xl"><i class="fa-solid fa-circle-check"></i></div>
-            <h4 class="text-lg font-serif text-slate-900" id="modal-title">Request Registered</h4>
-            <p class="text-xs text-slate-600 font-light leading-relaxed" id="modal-desc">Your inquiry has been received.</p>
+            <h4 class="text-lg font-serif text-slate-100" id="modal-title">Request Registered</h4>
+            <p class="text-xs text-slate-400 font-light leading-relaxed" id="modal-desc">Your inquiry has been received.</p>
             <button onclick="hideStatusModal()" class="px-6 py-2 bg-gradient-to-r from-brand-gold to-brand-goldaccent text-neutral-900 text-xs tracking-widest font-bold uppercase rounded transition shadow-lg">Close</button>
         </div>
     </div>
@@ -1110,6 +1185,204 @@
     <!-- ══════════════════════════════════════════════════════════
          SCRIPTS
     ═══════════════════════════════════════════════════════════ -->
-    <script src="assets/js/main.js"></script>
+    <script>
+        // ── Mobile Nav ──────────────────────────────────────────
+        function toggleMobileNav() {
+            document.getElementById('mobile-nav').classList.toggle('open');
+        }
+
+        // ── Catalogue Filter ────────────────────────────────────
+        function filterCatalogue(cat) {
+            document.querySelectorAll('.catalogue-item').forEach(el => {
+                if (cat === 'all' || el.dataset.cat === cat) {
+                    el.style.display = '';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.cat-tab').forEach(btn => {
+                const isActive = btn.dataset.cat === cat;
+                btn.classList.toggle('active-tab', isActive);
+                btn.classList.toggle('border-brand-gold/40', isActive);
+                btn.classList.toggle('text-brand-gold', isActive);
+                btn.classList.toggle('bg-brand-gold/10', isActive);
+                btn.classList.toggle('border-white/10', !isActive);
+                btn.classList.toggle('text-slate-400', !isActive);
+                btn.classList.toggle('bg-transparent', !isActive);
+            });
+        }
+
+        // ── Estimator ───────────────────────────────────────────
+        let currentProduct = "WPC Customized Door";
+        let currentStyleCode = "teak-modern";
+
+        const baseProductCosts = {
+            "WPC Customized Door": 4800,
+            "WFC Doors & Frames": 6500,
+            "PVC Designer Door": 4200,
+            "Premium Lockset Fittings": 1500
+        };
+
+        const styleMetadata = {
+            "teak-modern": {
+                woodClass: "wood-teak-grain",
+                panelsHTML: `<div class="w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm"></div><div class="w-full h-28 border border-black/30 bg-black/15 rounded shadow-sm my-3"></div><div class="w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm"></div>`,
+                desc: "Teak Gold + S-13"
+            },
+            "charcoal-lines": {
+                woodClass: "wood-charcoal-grain",
+                panelsHTML: `<div class="w-full h-4 border-b border-black/40"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div>`,
+                desc: "Charcoal Onyx + Lines"
+            },
+            "rose-classic": {
+                woodClass: "wood-rose-grain",
+                panelsHTML: `<div class="w-full h-24 border-2 border-black/20 bg-black/10 rounded-t-full flex items-center justify-center"><div class="w-8 h-8 border border-black/10 rounded-full"></div></div><div class="w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-4"></div><div class="w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-3"></div>`,
+                desc: "Rosewood + S-106"
+            },
+            "ivory-clean": {
+                woodClass: "wood-ivory-grain",
+                panelsHTML: `<div class="w-full h-full border border-black/10 rounded-md flex items-center justify-center text-[10px] text-neutral-800 tracking-widest uppercase">Ivory Flat</div>`,
+                desc: "Ivory Cream + Flat"
+            }
+        };
+
+        function updateEstProduct() {
+            currentProduct = document.getElementById('est-product').value;
+            runQuoteCalculation();
+        }
+
+        function syncCanvasSelections() {
+            const styleCode = document.getElementById('est-style').value;
+            currentStyleCode = styleCode;
+            const doorBody = document.getElementById('render-door-body');
+            const doorPanels = document.getElementById('render-door-panels');
+            const canvasTag = document.getElementById('canvas-style-tag');
+            const styleObj = styleMetadata[styleCode];
+            doorBody.className = "w-full h-full rounded-sm flex flex-col justify-between p-4 relative overflow-hidden transition-all duration-500 shadow-xl " + styleObj.woodClass;
+            doorPanels.innerHTML = styleObj.panelsHTML;
+            canvasTag.innerText = styleObj.desc;
+            runQuoteCalculation();
+        }
+
+        function runQuoteCalculation() {
+            const thickness = document.getElementById('est-thickness').value;
+            const qty = parseInt(document.getElementById('est-qty').value) || 1;
+            const withLock = document.getElementById('est-lock').checked;
+            let mult = 1.0;
+            if (thickness === "25mm") mult = 0.9;
+            if (thickness === "35mm") mult = 1.15;
+            if (thickness === "40mm") mult = 1.3;
+            const base = baseProductCosts[currentProduct] || 4800;
+            let perUnit = base * mult;
+            if (withLock) perUnit += 1200;
+            const min = Math.round(perUnit * qty);
+            const max = Math.round(perUnit * 1.2 * qty);
+            document.getElementById('est-final-range').innerText = `₹${min.toLocaleString('en-IN')} – ₹${max.toLocaleString('en-IN')}`;
+        }
+
+        function forwardConfigurationToWhatsApp() {
+            const name = document.getElementById('cust-name').value.trim() || "Builder";
+            const phone = document.getElementById('cust-phone').value.trim() || "Not provided";
+            const msg = `*NEW SPECIFICATION REQUEST — WINDOOR*\n\n*Name/Firm:* ${name}\n*Phone/Location:* ${phone}\n*Product:* ${currentProduct}\n*Style:* ${styleMetadata[currentStyleCode].desc}\n*Thickness:* ${document.getElementById('est-thickness').value}\n*Brand:* ${document.getElementById('est-brand').value}\n*Quantity:* ${document.getElementById('est-qty').value} pcs\n*Estimate Range:* ${document.getElementById('est-final-range').innerText}\n\n_Via Windoor Hanamkonda Web Portal._`;
+            window.open(`https://wa.me/919642585067?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // ── Contact Form ────────────────────────────────────────
+        function handleShowroomSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            const phone = document.getElementById('contact-phone').value;
+            const msg = document.getElementById('contact-message').value;
+            // Forward to WhatsApp
+            const waText = `*NEW CONSULTATION REQUEST*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Details:* ${msg}\n\n_Via Windoor Contact Form._`;
+            window.open(`https://wa.me/919642585067?text=${encodeURIComponent(waText)}`, '_blank');
+            showStatusModal("Request Sent!", `Thank you ${name}! Your enquiry has been forwarded to our team. We'll call you at ${phone} shortly.`);
+            document.getElementById('contact-showroom-form').reset();
+        }
+
+        // ── Modal ───────────────────────────────────────────────
+        function showStatusModal(title, text) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = text;
+            const m = document.getElementById('status-modal');
+            m.classList.remove('opacity-0', 'pointer-events-none');
+            m.classList.add('opacity-100');
+        }
+        function hideStatusModal() {
+            const m = document.getElementById('status-modal');
+            m.classList.add('opacity-0', 'pointer-events-none');
+            m.classList.remove('opacity-100');
+        }
+
+        // ── FAQ ──────────────────────────────────────────────────
+        const faqs = [
+            {
+                q: "What's the difference between WPC and WFC doors?",
+                a: "WPC (Wood Plastic Composite) doors are made entirely of polymer composite material — 100% waterproof, termite-proof, and maintenance-free. WFC (Wood Fiber Composite) doors use a fiber-core construction and are usually sold as a door+frame integrated set. WPC is better for moisture-heavy areas (bathrooms, kitchens); WFC is popular for main entries and bedrooms."
+            },
+            {
+                q: "Do you supply custom door sizes and non-standard frame widths?",
+                a: "Yes. We supply all doors in custom heights (6'6\" to 8'0\"), widths (2'6\" to 4'0\"), and thickness (25mm to 40mm). Frame widths are available from 3\" to 6\" to suit different wall thicknesses. Just share your wall thickness and opening measurements on WhatsApp."
+            },
+            {
+                q: "What brands do you carry and are you an authorized dealer?",
+                a: "We are authorized dealers for Elegant Doors & Ply, Ecoste™ Wood Polymer, Black Cobra Engineered Wood, Masonite Molded Series, GMG Premium Ply, and Spider® Safety Hardware. This means you receive genuine manufacturer-batch products with valid warranty and quality assurance."
+            },
+            {
+                q: "Do you offer bulk / contractor pricing for large projects?",
+                a: "Yes. Orders of 10+ units qualify for special contractor pricing. For large apartment or commercial projects (50+ units), we offer project-rate quotations directly from the manufacturer. Contact us on WhatsApp with your project size and timeline."
+            },
+            {
+                q: "Do you provide installation services or only supply?",
+                a: "We provide end-to-end service — supply, safe delivery to your site in Warangal/Hanamkonda/Hyderabad, and precision installation through our trained carpentry team. Installation includes mortise lock pocketing, hinge fitting, and door closer alignment."
+            },
+            {
+                q: "How long does delivery take after order confirmation?",
+                a: "Standard stock items are delivered within 3–5 working days to Warangal and Hanamkonda. Custom size orders typically take 7–12 working days depending on the manufacturer's production schedule. We confirm delivery timelines at the time of order."
+            },
+            {
+                q: "What finishes and laminates are available?",
+                a: "Available finishes include Golden Teak, Walnut, Ash Wood, Imperial Rosewood, Charcoal Onyx, Ivory Cream, and custom laminates on request. PVC designer doors come in S-13 and S-106 panel styles. Hardware finishes include SS (Stainless Steel), AB (Antique Brass), and PB (Polished Brass)."
+            }
+        ];
+
+        function buildFAQ() {
+            const container = document.getElementById('faq-container');
+            faqs.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'luxury-glass rounded-2xl border border-white/5 overflow-hidden';
+                div.innerHTML = `
+                    <button onclick="toggleFAQ(${i})" class="w-full p-6 flex items-start justify-between text-left gap-4 group">
+                        <span class="text-sm font-semibold text-slate-200 group-hover:text-white transition leading-snug">${item.q}</span>
+                        <i id="faq-chevron-${i}" class="fa-solid fa-chevron-down faq-chevron text-brand-gold text-xs shrink-0 mt-1"></i>
+                    </button>
+                    <div id="faq-answer-${i}" class="faq-answer">
+                        <p class="text-xs text-slate-400 font-light leading-relaxed px-6 pb-6">${item.a}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleFAQ(i) {
+            const answer = document.getElementById(`faq-answer-${i}`);
+            const chevron = document.getElementById(`faq-chevron-${i}`);
+            const isOpen = answer.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
+            // Open clicked if was closed
+            if (!isOpen) {
+                answer.classList.add('open');
+                chevron.classList.add('rotated');
+            }
+        }
+
+        // ── Init ─────────────────────────────────────────────────
+        window.onload = function() {
+            runQuoteCalculation();
+            buildFAQ();
+        };
+    </script>
 </body>
 </html>
