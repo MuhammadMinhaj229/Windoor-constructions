@@ -1,0 +1,3 @@
+## 2026-08-01 - Raw DOM Manipulation and Repeated DOM Queries in HTML files
+**Learning:** In plain HTML/JS codebases, repeatedly calling `document.querySelectorAll()` inside interaction handlers (like `filterCatalogue` or `toggleFAQ`) causes unnecessary performance overhead since DOM lookups are expensive. Also, using `.appendChild()` inside a loop to construct elements triggers an O(N) layout reflow.
+**Action:** When working on raw JavaScript optimizations, always cache `NodeList` variables globally if the DOM elements are mostly static. To build large element lists efficiently, append them to a `DocumentFragment` first and only append the fragment to the DOM once at the end.

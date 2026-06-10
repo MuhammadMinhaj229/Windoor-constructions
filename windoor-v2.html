@@ -1196,15 +1196,22 @@
         }
 
         // ── Catalogue Filter ────────────────────────────────────
+        // ⚡ Bolt Optimization: Cache static NodeLists to avoid repeated DOM lookups
+        let cachedCatalogueItems = null;
+        let cachedCatTabs = null;
+
         function filterCatalogue(cat) {
-            document.querySelectorAll('.catalogue-item').forEach(el => {
+            if (!cachedCatalogueItems) cachedCatalogueItems = document.querySelectorAll('.catalogue-item');
+            if (!cachedCatTabs) cachedCatTabs = document.querySelectorAll('.cat-tab');
+
+            cachedCatalogueItems.forEach(el => {
                 if (cat === 'all' || el.dataset.cat === cat) {
                     el.style.display = '';
                 } else {
                     el.style.display = 'none';
                 }
             });
-            document.querySelectorAll('.cat-tab').forEach(btn => {
+            cachedCatTabs.forEach(btn => {
                 const isActive = btn.dataset.cat === cat;
                 btn.classList.toggle('active-tab', isActive);
                 btn.classList.toggle('border-brand-gold/40', isActive);
@@ -1352,6 +1359,7 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-white/5 overflow-hidden';
@@ -1364,17 +1372,29 @@
                         <p class="text-xs text-slate-400 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                // ⚡ Bolt Optimization: Batch insertions with DocumentFragment
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
+
+        // ⚡ Bolt Optimization: Cache FAQ elements dynamically
+        let cachedFaqAnswers = null;
+        let cachedFaqChevrons = null;
 
         function toggleFAQ(i) {
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
+
+            // Build cache only on first interaction to ensure DOM is ready
+            if (!cachedFaqAnswers) cachedFaqAnswers = document.querySelectorAll('.faq-answer');
+            if (!cachedFaqChevrons) cachedFaqChevrons = document.querySelectorAll('.faq-chevron');
+
             // Close all
-            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
+            cachedFaqAnswers.forEach(a => a.classList.remove('open'));
+            cachedFaqChevrons.forEach(c => c.classList.remove('rotated'));
+
             // Open clicked if was closed
             if (!isOpen) {
                 answer.classList.add('open');
