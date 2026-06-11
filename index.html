@@ -1270,7 +1270,7 @@
 
         function runQuoteCalculation() {
             const thickness = document.getElementById('est-thickness').value;
-            const qty = parseInt(document.getElementById('est-qty').value) || 1;
+            const qty = Math.max(1, parseInt(document.getElementById('est-qty').value) || 1);
             const withLock = document.getElementById('est-lock').checked;
             let mult = 1.0;
             if (thickness === "25mm") mult = 0.9;
