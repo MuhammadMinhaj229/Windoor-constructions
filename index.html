@@ -1230,22 +1230,54 @@
         const styleMetadata = {
             "teak-modern": {
                 woodClass: "wood-teak-grain",
-                panelsHTML: `<div class="w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm"></div><div class="w-full h-28 border border-black/30 bg-black/15 rounded shadow-sm my-3"></div><div class="w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm"></div>`,
+                createPanels: () => {
+                    const frag = document.createDocumentFragment();
+                    const d1 = document.createElement("div"); d1.className = "w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm";
+                    const d2 = document.createElement("div"); d2.className = "w-full h-28 border border-black/30 bg-black/15 rounded shadow-sm my-3";
+                    const d3 = document.createElement("div"); d3.className = "w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm";
+                    frag.append(d1, d2, d3);
+                    return frag;
+                },
                 desc: "Teak Gold + S-13"
             },
             "charcoal-lines": {
                 woodClass: "wood-charcoal-grain",
-                panelsHTML: `<div class="w-full h-4 border-b border-black/40"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div>`,
+                createPanels: () => {
+                    const frag = document.createDocumentFragment();
+                    const d1 = document.createElement("div"); d1.className = "w-full h-4 border-b border-black/40";
+                    const d2 = document.createElement("div"); d2.className = "w-full h-4 border-b border-black/40 mt-3";
+                    const d3 = document.createElement("div"); d3.className = "w-full h-4 border-b border-black/40 mt-3";
+                    const d4 = document.createElement("div"); d4.className = "w-full h-4 border-b border-black/40 mt-3";
+                    const d5 = document.createElement("div"); d5.className = "w-full h-4 border-b border-black/40 mt-3";
+                    frag.append(d1, d2, d3, d4, d5);
+                    return frag;
+                },
                 desc: "Charcoal Onyx + Lines"
             },
             "rose-classic": {
                 woodClass: "wood-rose-grain",
-                panelsHTML: `<div class="w-full h-24 border-2 border-black/20 bg-black/10 rounded-t-full flex items-center justify-center"><div class="w-8 h-8 border border-black/10 rounded-full"></div></div><div class="w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-4"></div><div class="w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-3"></div>`,
+                createPanels: () => {
+                    const frag = document.createDocumentFragment();
+                    const d1 = document.createElement("div"); d1.className = "w-full h-24 border-2 border-black/20 bg-black/10 rounded-t-full flex items-center justify-center";
+                    const inner = document.createElement("div"); inner.className = "w-8 h-8 border border-black/10 rounded-full";
+                    d1.appendChild(inner);
+                    const d2 = document.createElement("div"); d2.className = "w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-4";
+                    const d3 = document.createElement("div"); d3.className = "w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-3";
+                    frag.append(d1, d2, d3);
+                    return frag;
+                },
                 desc: "Rosewood + S-106"
             },
             "ivory-clean": {
                 woodClass: "wood-ivory-grain",
-                panelsHTML: `<div class="w-full h-full border border-black/10 rounded-md flex items-center justify-center text-[10px] text-neutral-800 tracking-widest uppercase">Ivory Flat</div>`,
+                createPanels: () => {
+                    const frag = document.createDocumentFragment();
+                    const d1 = document.createElement("div");
+                    d1.className = "w-full h-full border border-black/10 rounded-md flex items-center justify-center text-[10px] text-neutral-800 tracking-widest uppercase";
+                    d1.textContent = "Ivory Flat";
+                    frag.append(d1);
+                    return frag;
+                },
                 desc: "Ivory Cream + Flat"
             }
         };
@@ -1263,7 +1295,8 @@
             const canvasTag = document.getElementById('canvas-style-tag');
             const styleObj = styleMetadata[styleCode];
             doorBody.className = "w-full h-full rounded-sm flex flex-col justify-between p-4 relative overflow-hidden transition-all duration-500 shadow-xl " + styleObj.woodClass;
-            doorPanels.innerHTML = styleObj.panelsHTML;
+            doorPanels.textContent = '';
+            doorPanels.append(styleObj.createPanels());
             canvasTag.innerText = styleObj.desc;
             runQuoteCalculation();
         }
