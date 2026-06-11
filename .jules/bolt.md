@@ -1,0 +1,3 @@
+## 2026-06-11 - [Security & Performance: Noopener]
+**Learning:** In a vanilla HTML codebase heavily reliant on WhatsApp redirects and external links, failing to use `noopener noreferrer` for `target="_blank"` and `window.open` calls can block the main thread, resulting in performance degradation on the originating page while the new tab loads.
+**Action:** When working on link modifications, ensure `noopener` is added. However, avoid "improving" performance by aggressively refactoring declarative `innerHTML` templates into verbose `document.createElement` blocks, as this is rejected as an unreadable micro-optimization.
