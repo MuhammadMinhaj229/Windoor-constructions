@@ -1220,6 +1220,9 @@
         let currentProduct = "WPC Customized Door";
         let currentStyleCode = "teak-modern";
 
+        const DEFAULT_BASE_COST = 4800;
+        const LOCK_ADDON_COST = 1200;
+
         const baseProductCosts = {
             "WPC Customized Door": 4800,
             "WFC Doors & Frames": 6500,
@@ -1276,9 +1279,9 @@
             if (thickness === "25mm") mult = 0.9;
             if (thickness === "35mm") mult = 1.15;
             if (thickness === "40mm") mult = 1.3;
-            const base = baseProductCosts[currentProduct] || 4800;
+            const base = baseProductCosts[currentProduct] || DEFAULT_BASE_COST;
             let perUnit = base * mult;
-            if (withLock) perUnit += 1200;
+            if (withLock) perUnit += LOCK_ADDON_COST;
             const min = Math.round(perUnit * qty);
             const max = Math.round(perUnit * 1.2 * qty);
             document.getElementById('est-final-range').innerText = `₹${min.toLocaleString('en-IN')} – ₹${max.toLocaleString('en-IN')}`;
