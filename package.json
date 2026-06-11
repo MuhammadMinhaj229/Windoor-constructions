@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "jsdom": "^29.1.1",
+    "mocha": "^11.7.6"
+  },
+  "scripts": {
+    "test": "mocha test-runQuoteCalculation.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MuhammadMinhaj229/Windoor-constructions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MuhammadMinhaj229/Windoor-constructions/issues"
+  },
+  "homepage": "https://github.com/MuhammadMinhaj229/Windoor-constructions#readme"
+}
