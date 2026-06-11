@@ -1,0 +1,3 @@
+## 2024-05-24 - Optimizing Vanilla JS DOM Manipulation
+**Learning:** In a plain HTML/JS architecture without a virtual DOM (like React), directly querying the DOM (`querySelectorAll`) on every click event (e.g., category filtering) and appending elements one by one in loops (e.g., building FAQs) causes significant layout thrashing and performance bottlenecks.
+**Action:** Always cache NodeLists (`querySelectorAll`) in variables outside the event handler if the DOM elements are static. Use `DocumentFragment` to batch DOM insertions, appending the fragment to the live DOM only once. For accordions/toggles, track the currently open index in state rather than using an O(n) loop to close all other items.
