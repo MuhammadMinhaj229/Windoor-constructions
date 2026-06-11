@@ -1230,22 +1230,46 @@
         const styleMetadata = {
             "teak-modern": {
                 woodClass: "wood-teak-grain",
-                panelsHTML: `<div class="w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm"></div><div class="w-full h-28 border border-black/30 bg-black/15 rounded shadow-sm my-3"></div><div class="w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm"></div>`,
+                panelsDef: [
+                    { classes: "w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm" },
+                    { classes: "w-full h-28 border border-black/30 bg-black/15 rounded shadow-sm my-3" },
+                    { classes: "w-full h-16 border border-black/30 bg-black/15 rounded shadow-sm" }
+                ],
                 desc: "Teak Gold + S-13"
             },
             "charcoal-lines": {
                 woodClass: "wood-charcoal-grain",
-                panelsHTML: `<div class="w-full h-4 border-b border-black/40"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div><div class="w-full h-4 border-b border-black/40 mt-3"></div>`,
+                panelsDef: [
+                    { classes: "w-full h-4 border-b border-black/40" },
+                    { classes: "w-full h-4 border-b border-black/40 mt-3" },
+                    { classes: "w-full h-4 border-b border-black/40 mt-3" },
+                    { classes: "w-full h-4 border-b border-black/40 mt-3" },
+                    { classes: "w-full h-4 border-b border-black/40 mt-3" }
+                ],
                 desc: "Charcoal Onyx + Lines"
             },
             "rose-classic": {
                 woodClass: "wood-rose-grain",
-                panelsHTML: `<div class="w-full h-24 border-2 border-black/20 bg-black/10 rounded-t-full flex items-center justify-center"><div class="w-8 h-8 border border-black/10 rounded-full"></div></div><div class="w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-4"></div><div class="w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-3"></div>`,
+                panelsDef: [
+                    {
+                        classes: "w-full h-24 border-2 border-black/20 bg-black/10 rounded-t-full flex items-center justify-center",
+                        children: [
+                            { classes: "w-8 h-8 border border-black/10 rounded-full" }
+                        ]
+                    },
+                    { classes: "w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-4" },
+                    { classes: "w-full h-16 border-2 border-black/20 bg-black/10 rounded mt-3" }
+                ],
                 desc: "Rosewood + S-106"
             },
             "ivory-clean": {
                 woodClass: "wood-ivory-grain",
-                panelsHTML: `<div class="w-full h-full border border-black/10 rounded-md flex items-center justify-center text-[10px] text-neutral-800 tracking-widest uppercase">Ivory Flat</div>`,
+                panelsDef: [
+                    {
+                        classes: "w-full h-full border border-black/10 rounded-md flex items-center justify-center text-[10px] text-neutral-800 tracking-widest uppercase",
+                        text: "Ivory Flat"
+                    }
+                ],
                 desc: "Ivory Cream + Flat"
             }
         };
@@ -1263,7 +1287,33 @@
             const canvasTag = document.getElementById('canvas-style-tag');
             const styleObj = styleMetadata[styleCode];
             doorBody.className = "w-full h-full rounded-sm flex flex-col justify-between p-4 relative overflow-hidden transition-all duration-500 shadow-xl " + styleObj.woodClass;
-            doorPanels.innerHTML = styleObj.panelsHTML;
+
+            doorPanels.replaceChildren();
+            if (styleObj.panelsDef) {
+                styleObj.panelsDef.forEach(panelDef => {
+                    const panelEl = document.createElement('div');
+                    if (panelDef.classes) {
+                        panelEl.className = panelDef.classes;
+                    }
+                    if (panelDef.text) {
+                        panelEl.textContent = panelDef.text;
+                    }
+                    if (panelDef.children) {
+                        panelDef.children.forEach(childDef => {
+                            const childEl = document.createElement('div');
+                            if (childDef.classes) {
+                                childEl.className = childDef.classes;
+                            }
+                            if (childDef.text) {
+                                childEl.textContent = childDef.text;
+                            }
+                            panelEl.appendChild(childEl);
+                        });
+                    }
+                    doorPanels.appendChild(panelEl);
+                });
+            }
+
             canvasTag.innerText = styleObj.desc;
             runQuoteCalculation();
         }
