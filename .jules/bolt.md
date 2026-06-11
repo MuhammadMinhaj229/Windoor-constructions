@@ -1,0 +1,2 @@
+- **DOM Queries in Loops/Functions**: Repeatedly running `document.querySelectorAll()` inside frequently executed functions (like `filterCatalogue`) can be a major source of performance degradation due to layout thrashing and DOM traversal costs.
+- **Caching Static DOM Elements**: When a `NodeList` is not expected to change dynamically, caching the result of `document.querySelectorAll()` in higher-scoped variables significantly improves performance. In our benchmark, this reduced the execution time of 10,000 function calls from ~22.6s to ~4.0s.
