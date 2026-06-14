@@ -81,10 +81,16 @@
     <style>
         body {
             background-color: #f8fafc;
+        }
+        /* ⚡ Bolt: Prevent scroll jank by using a fixed pseudo-element instead of background-attachment: fixed */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
             background-image:
                 radial-gradient(circle at 5% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
                 radial-gradient(circle at 95% 85%, rgba(217, 160, 91, 0.08) 0%, transparent 50%);
-            background-attachment: fixed;
         }
         .luxury-glass {
             background: rgba(255, 255, 255, 0.85);
