@@ -1196,15 +1196,22 @@
         }
 
         // ── Catalogue Filter ────────────────────────────────────
+        let catalogueItemsCache = null;
+        let catTabsCache = null;
+
         function filterCatalogue(cat) {
-            document.querySelectorAll('.catalogue-item').forEach(el => {
+            // ⚡ Bolt: Cache static NodeLists to prevent redundant O(n) DOM queries on every interaction
+            if (!catalogueItemsCache) catalogueItemsCache = document.querySelectorAll('.catalogue-item');
+            if (!catTabsCache) catTabsCache = document.querySelectorAll('.cat-tab');
+
+            catalogueItemsCache.forEach(el => {
                 if (cat === 'all' || el.dataset.cat === cat) {
                     el.style.display = '';
                 } else {
                     el.style.display = 'none';
                 }
             });
-            document.querySelectorAll('.cat-tab').forEach(btn => {
+            catTabsCache.forEach(btn => {
                 const isActive = btn.dataset.cat === cat;
                 btn.classList.toggle('active-tab', isActive);
                 btn.classList.toggle('border-brand-gold/40', isActive);
@@ -1352,6 +1359,8 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            // ⚡ Bolt: Use a DocumentFragment to batch DOM insertions and avoid multiple layout reflows during the loop
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-slate-200 overflow-hidden';
@@ -1364,8 +1373,9 @@
                         <p class="text-xs text-slate-600 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
 
         function toggleFAQ(i) {
