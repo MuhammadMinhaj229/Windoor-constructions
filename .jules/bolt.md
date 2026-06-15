@@ -1,0 +1,3 @@
+## 2024-05-24 - DocumentFragment and window.onload Blockers
+**Learning:** `window.onload` delays interactive component execution significantly when heavy external iframes (like Google Maps embeds) are present on the page, as it waits for all frame assets to finish downloading. Additionally, generating DOM elements iteratively inside loops directly appends to the DOM, causing reflows.
+**Action:** When a `<script>` tag is positioned at the end of the `<body>`, its code can safely be executed immediately without `window.onload`, since the DOM is already parsed. Use a `DocumentFragment` when building elements iteratively to batch append operations into a single DOM update.
