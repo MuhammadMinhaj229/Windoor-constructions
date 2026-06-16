@@ -1,0 +1,3 @@
+## 2024-05-24 - [Add noopener noreferrer to target="_blank" links]
+**Learning:** Adding `rel="noopener noreferrer"` to anchor tags with `target="_blank"` and `'noopener,noreferrer'` to `window.open` calls prevents reverse tabnabbing and improves performance by ensuring the new tab runs on a separate thread, avoiding main thread blocking.
+**Action:** Always include these attributes for external links and `window.open` calls.
