@@ -1352,6 +1352,7 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-slate-200 overflow-hidden';
@@ -1364,8 +1365,9 @@
                         <p class="text-xs text-slate-600 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
 
         function toggleFAQ(i) {
@@ -1383,10 +1385,9 @@
         }
 
         // ── Init ─────────────────────────────────────────────────
-        window.onload = function() {
-            runQuoteCalculation();
-            buildFAQ();
-        };
+        // Initialize immediately to avoid blocking Time to Interactive waiting for window.onload
+        runQuoteCalculation();
+        buildFAQ();
     </script>
 </body>
 </html>
