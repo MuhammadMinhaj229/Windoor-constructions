@@ -1355,15 +1355,35 @@
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-white/5 overflow-hidden';
-                div.innerHTML = `
-                    <button onclick="toggleFAQ(${i})" class="w-full p-6 flex items-start justify-between text-left gap-4 group">
-                        <span class="text-sm font-semibold text-slate-200 group-hover:text-white transition leading-snug">${item.q}</span>
-                        <i id="faq-chevron-${i}" class="fa-solid fa-chevron-down faq-chevron text-brand-gold text-xs shrink-0 mt-1"></i>
-                    </button>
-                    <div id="faq-answer-${i}" class="faq-answer">
-                        <p class="text-xs text-slate-400 font-light leading-relaxed px-6 pb-6">${item.a}</p>
-                    </div>
-                `;
+
+                const button = document.createElement('button');
+                button.onclick = () => toggleFAQ(i);
+                button.className = 'w-full p-6 flex items-start justify-between text-left gap-4 group';
+
+                const span = document.createElement('span');
+                span.className = 'text-sm font-semibold text-slate-200 group-hover:text-white transition leading-snug';
+                span.textContent = item.q;
+
+                const iElem = document.createElement('i');
+                iElem.id = `faq-chevron-${i}`;
+                iElem.className = 'fa-solid fa-chevron-down faq-chevron text-brand-gold text-xs shrink-0 mt-1';
+
+                button.appendChild(span);
+                button.appendChild(iElem);
+
+                const answerDiv = document.createElement('div');
+                answerDiv.id = `faq-answer-${i}`;
+                answerDiv.className = 'faq-answer';
+
+                const pElem = document.createElement('p');
+                pElem.className = 'text-xs text-slate-400 font-light leading-relaxed px-6 pb-6';
+                pElem.textContent = item.a;
+
+                answerDiv.appendChild(pElem);
+
+                div.appendChild(button);
+                div.appendChild(answerDiv);
+
                 container.appendChild(div);
             });
         }
