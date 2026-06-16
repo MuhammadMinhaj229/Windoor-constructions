@@ -50,6 +50,8 @@
     }
     </script>
 
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -1196,15 +1198,22 @@
         }
 
         // ── Catalogue Filter ────────────────────────────────────
+        let catalogueItems;
+        let catTabs;
+
         function filterCatalogue(cat) {
-            document.querySelectorAll('.catalogue-item').forEach(el => {
+            // cache the dom queries
+            if (!catalogueItems) catalogueItems = document.querySelectorAll('.catalogue-item');
+            if (!catTabs) catTabs = document.querySelectorAll('.cat-tab');
+
+            catalogueItems.forEach(el => {
                 if (cat === 'all' || el.dataset.cat === cat) {
                     el.style.display = '';
                 } else {
                     el.style.display = 'none';
                 }
             });
-            document.querySelectorAll('.cat-tab').forEach(btn => {
+            catTabs.forEach(btn => {
                 const isActive = btn.dataset.cat === cat;
                 btn.classList.toggle('active-tab', isActive);
                 btn.classList.toggle('border-brand-gold/40', isActive);
@@ -1352,6 +1361,7 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-white/5 overflow-hidden';
@@ -1364,21 +1374,35 @@
                         <p class="text-xs text-slate-400 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
+
+        let openFaqIndex = null;
 
         function toggleFAQ(i) {
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
-            // Close all
-            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
-            // Open clicked if was closed
+
+            // Close previously open FAQ if it's different from the clicked one
+            if (openFaqIndex !== null && openFaqIndex !== i) {
+                const prevAnswer = document.getElementById(`faq-answer-${openFaqIndex}`);
+                const prevChevron = document.getElementById(`faq-chevron-${openFaqIndex}`);
+                if (prevAnswer) prevAnswer.classList.remove('open');
+                if (prevChevron) prevChevron.classList.remove('rotated');
+            }
+
+            // Toggle clicked
             if (!isOpen) {
                 answer.classList.add('open');
                 chevron.classList.add('rotated');
+                openFaqIndex = i;
+            } else {
+                answer.classList.remove('open');
+                chevron.classList.remove('rotated');
+                openFaqIndex = null;
             }
         }
 
