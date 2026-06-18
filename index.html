@@ -1350,8 +1350,10 @@
             }
         ];
 
+        // ⚡ Bolt: Use DocumentFragment to batch DOM insertions to avoid O(N) reflows inside the loop
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-slate-200 overflow-hidden';
@@ -1364,8 +1366,9 @@
                         <p class="text-xs text-slate-600 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
 
         function toggleFAQ(i) {
@@ -1383,10 +1386,10 @@
         }
 
         // ── Init ─────────────────────────────────────────────────
-        window.onload = function() {
-            runQuoteCalculation();
-            buildFAQ();
-        };
+        // ⚡ Bolt: Execute scripts directly at the end of the body to prevent Time to Interactive blocking,
+        // avoiding window.onload which waits for all external iframes and assets to load.
+        runQuoteCalculation();
+        buildFAQ();
     </script>
 </body>
 </html>
