@@ -1352,6 +1352,10 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            // ⚡ Bolt Performance Optimization:
+            // Using a DocumentFragment batches DOM insertions, preventing O(N) reflows
+            // and speeding up rendering, particularly on lower-end devices.
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-slate-200 overflow-hidden';
@@ -1364,8 +1368,9 @@
                         <p class="text-xs text-slate-600 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
 
         function toggleFAQ(i) {
@@ -1383,10 +1388,13 @@
         }
 
         // ── Init ─────────────────────────────────────────────────
-        window.onload = function() {
-            runQuoteCalculation();
-            buildFAQ();
-        };
+        // ⚡ Bolt Performance Optimization:
+        // Removed window.onload to prevent Time to Interactive (TTI) blocking.
+        // Waiting for window.onload forces initialization to wait for heavy external
+        // iframes (like Google Maps) to finish downloading. Executing scripts directly
+        // at the end of the body provides significantly faster interactivity.
+        runQuoteCalculation();
+        buildFAQ();
     </script>
 </body>
 </html>
