@@ -1352,7 +1352,9 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
-            // ⚡ Bolt: Use DocumentFragment to batch DOM insertions and avoid O(N) reflows
+            // ⚡ Bolt Performance Optimization:
+            // Using a DocumentFragment batches DOM insertions, preventing O(N) reflows
+            // and speeding up rendering, particularly on lower-end devices.
             const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
@@ -1386,8 +1388,11 @@
         }
 
         // ── Init ─────────────────────────────────────────────────
-        // ⚡ Bolt: Execute directly at body end instead of window.onload to prevent
-        // blocking Time to Interactive due to heavy external iframes (Google Maps)
+        // ⚡ Bolt Performance Optimization:
+        // Removed window.onload to prevent Time to Interactive (TTI) blocking.
+        // Waiting for window.onload forces initialization to wait for heavy external
+        // iframes (like Google Maps) to finish downloading. Executing scripts directly
+        // at the end of the body provides significantly faster interactivity.
         runQuoteCalculation();
         buildFAQ();
     </script>

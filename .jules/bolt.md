@@ -1,3 +1,5 @@
-## 2024-05-18 - Prevent Blocking TTI with Heavy Iframes and O(N) Reflows
-**Learning:** Using `window.onload` for initialization in an app containing heavy external iframes (like Google Maps) significantly blocks Time to Interactive (TTI), as the browser waits for all iframe resources to finish downloading before executing the script. Also, appending dynamic elements individually inside a loop causes O(N) browser reflows.
-**Action:** Execute initialization scripts directly at the end of the `<body>` tag rather than inside `window.onload`. Always use `DocumentFragment` to batch DOM element insertions inside loops to avoid O(N) reflows and minimize performance bottlenecks.
+## 2026-06-18 - TTI and DOM Reflow Bottlenecks in Vanilla HTML/JS
+
+**Learning:** In a vanilla HTML/JS application, relying on `window.onload` for critical initialization scripts severely delays Time to Interactive (TTI) because it waits for all heavy external resources (e.g., iframes like Google Maps) to finish downloading. Additionally, inserting elements directly into the DOM inside a loop (e.g., `container.appendChild` in `forEach`) triggers O(N) reflows, causing performance bottlenecks during rendering.
+
+**Action:** Execute initialization scripts directly at the end of the `<body>` instead of using `window.onload` to prevent TTI blocking. Consistently use `DocumentFragment` to batch dynamic DOM element insertions inside loops, inserting the entire fragment at once to ensure a single reflow.
