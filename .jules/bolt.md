@@ -1,0 +1,3 @@
+## 2024-05-18 - Prevent Blocking TTI with Heavy Iframes and O(N) Reflows
+**Learning:** Using `window.onload` for initialization in an app containing heavy external iframes (like Google Maps) significantly blocks Time to Interactive (TTI), as the browser waits for all iframe resources to finish downloading before executing the script. Also, appending dynamic elements individually inside a loop causes O(N) browser reflows.
+**Action:** Execute initialization scripts directly at the end of the `<body>` tag rather than inside `window.onload`. Always use `DocumentFragment` to batch DOM element insertions inside loops to avoid O(N) reflows and minimize performance bottlenecks.
