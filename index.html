@@ -1268,10 +1268,27 @@
             runQuoteCalculation();
         }
 
+        // Cache DOM elements for quote calculation
+        let estThicknessEl, estQtyEl, estLockEl, estFinalRangeEl;
+        document.addEventListener('DOMContentLoaded', () => {
+            estThicknessEl = document.getElementById('est-thickness');
+            estQtyEl = document.getElementById('est-qty');
+            estLockEl = document.getElementById('est-lock');
+            estFinalRangeEl = document.getElementById('est-final-range');
+        });
+
         function runQuoteCalculation() {
-            const thickness = document.getElementById('est-thickness').value;
-            const qty = parseInt(document.getElementById('est-qty').value) || 1;
-            const withLock = document.getElementById('est-lock').checked;
+            // Fallback in case elements aren't cached yet
+            if (!estThicknessEl) {
+                estThicknessEl = document.getElementById('est-thickness');
+                estQtyEl = document.getElementById('est-qty');
+                estLockEl = document.getElementById('est-lock');
+                estFinalRangeEl = document.getElementById('est-final-range');
+            }
+
+            const thickness = estThicknessEl.value;
+            const qty = parseInt(estQtyEl.value) || 1;
+            const withLock = estLockEl.checked;
             let mult = 1.0;
             if (thickness === "25mm") mult = 0.9;
             if (thickness === "35mm") mult = 1.15;
@@ -1281,7 +1298,7 @@
             if (withLock) perUnit += 1200;
             const min = Math.round(perUnit * qty);
             const max = Math.round(perUnit * 1.2 * qty);
-            document.getElementById('est-final-range').innerText = `₹${min.toLocaleString('en-IN')} – ₹${max.toLocaleString('en-IN')}`;
+            estFinalRangeEl.innerText = `₹${min.toLocaleString('en-IN')} – ₹${max.toLocaleString('en-IN')}`;
         }
 
         function forwardConfigurationToWhatsApp() {
