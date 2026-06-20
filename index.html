@@ -81,10 +81,22 @@
     <style>
         body {
             background-color: #f8fafc;
+        }
+        /* ⚡ Bolt: Use a fixed pseudo-element instead of background-attachment: fixed
+           to move the background to its own compositor layer and prevent full-layout
+           repaints on scroll, improving mobile scrolling performance. */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
             background-image:
                 radial-gradient(circle at 5% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
                 radial-gradient(circle at 95% 85%, rgba(217, 160, 91, 0.08) 0%, transparent 50%);
-            background-attachment: fixed;
         }
         .luxury-glass {
             background: rgba(255, 255, 255, 0.85);
