@@ -1288,7 +1288,7 @@
             const name = document.getElementById('cust-name').value.trim() || "Builder";
             const phone = document.getElementById('cust-phone').value.trim() || "Not provided";
             const msg = `*NEW SPECIFICATION REQUEST — WINDOOR*\n\n*Name/Firm:* ${name}\n*Phone/Location:* ${phone}\n*Product:* ${currentProduct}\n*Style:* ${styleMetadata[currentStyleCode].desc}\n*Thickness:* ${document.getElementById('est-thickness').value}\n*Brand:* ${document.getElementById('est-brand').value}\n*Quantity:* ${document.getElementById('est-qty').value} pcs\n*Estimate Range:* ${document.getElementById('est-final-range').innerText}\n\n_Via Windoor Hanamkonda Web Portal._`;
-            window.open(`https://wa.me/919642585067?text=${encodeURIComponent(msg)}`, '_blank');
+            window.open(`https://wa.me/919642585067?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
         }
 
         // ── Contact Form ────────────────────────────────────────
@@ -1299,7 +1299,7 @@
             const msg = document.getElementById('contact-message').value;
             // Forward to WhatsApp
             const waText = `*NEW CONSULTATION REQUEST*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Details:* ${msg}\n\n_Via Windoor Contact Form._`;
-            window.open(`https://wa.me/919642585067?text=${encodeURIComponent(waText)}`, '_blank');
+            window.open(`https://wa.me/919642585067?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
             showStatusModal("Request Sent!", `Thank you ${name}! Your enquiry has been forwarded to our team. We'll call you at ${phone} shortly.`);
             document.getElementById('contact-showroom-form').reset();
         }
