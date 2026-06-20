@@ -1368,13 +1368,19 @@
             });
         }
 
+        let cachedFaqAnswers = null;
+        let cachedFaqChevrons = null;
+
         function toggleFAQ(i) {
+            if (!cachedFaqAnswers) cachedFaqAnswers = document.querySelectorAll('.faq-answer');
+            if (!cachedFaqChevrons) cachedFaqChevrons = document.querySelectorAll('.faq-chevron');
+
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
             // Close all
-            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
+            cachedFaqAnswers.forEach(a => a.classList.remove('open'));
+            cachedFaqChevrons.forEach(c => c.classList.remove('rotated'));
             // Open clicked if was closed
             if (!isOpen) {
                 answer.classList.add('open');
