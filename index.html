@@ -83,10 +83,16 @@
         body {
             background-color: #f8fafc;
         }
+        /* ⚡ Bolt: Use a fixed pseudo-element instead of background-attachment: fixed
+           to move the background to its own compositor layer and prevent full-layout
+           repaints on scroll, improving mobile scrolling performance. */
         body::before {
-            content: '';
+            content: "";
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
             pointer-events: none;
             background-image:
