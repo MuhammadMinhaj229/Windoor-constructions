@@ -79,12 +79,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
+        /* ⚡ Bolt: Removed 'background-attachment: fixed' from body and moved to pseudo-element to prevent scroll repaints */
         body {
             background-color: #f8fafc;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
             background-image:
                 radial-gradient(circle at 5% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
                 radial-gradient(circle at 95% 85%, rgba(217, 160, 91, 0.08) 0%, transparent 50%);
-            background-attachment: fixed;
         }
         .luxury-glass {
             background: rgba(255, 255, 255, 0.85);
@@ -1359,6 +1366,8 @@
 
         function buildFAQ() {
             const container = document.getElementById('faq-container');
+            // ⚡ Bolt: Use DocumentFragment to batch DOM insertions and avoid O(N) reflows
+            const fragment = document.createDocumentFragment();
             faqs.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = 'luxury-glass rounded-2xl border border-slate-200 overflow-hidden';
@@ -1371,17 +1380,31 @@
                         <p class="text-xs text-slate-600 font-light leading-relaxed px-6 pb-6">${item.a}</p>
                     </div>
                 `;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+            container.appendChild(fragment);
         }
+
+        // Cache variables for DOM optimization
+        let cachedAnswers = null;
+        let cachedChevrons = null;
 
         function toggleFAQ(i) {
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
+
+            // ⚡ Cache DOM queries on first run to improve performance
+            // by avoiding repetitive document.querySelectorAll calls
+            if (!cachedAnswers) {
+                cachedAnswers = document.querySelectorAll('.faq-answer');
+                cachedChevrons = document.querySelectorAll('.faq-chevron');
+            }
+
             // Close all
-            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
+            cachedAnswers.forEach(a => a.classList.remove('open'));
+            cachedChevrons.forEach(c => c.classList.remove('rotated'));
+
             // Open clicked if was closed
             if (!isOpen) {
                 answer.classList.add('open');
@@ -1390,10 +1413,10 @@
         }
 
         // ── Init ─────────────────────────────────────────────────
-        window.onload = function() {
-            runQuoteCalculation();
-            buildFAQ();
-        };
+        // ⚡ Bolt: Execute directly at body end instead of window.onload to prevent
+        // blocking Time to Interactive due to heavy external iframes (Google Maps)
+        runQuoteCalculation();
+        buildFAQ();
     </script>
 </body>
 </html>

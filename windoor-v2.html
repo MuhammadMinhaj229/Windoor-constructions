@@ -1375,13 +1375,26 @@
             });
         }
 
+        // Cache variables for DOM optimization
+        let cachedAnswers = null;
+        let cachedChevrons = null;
+
         function toggleFAQ(i) {
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
+
+            // ⚡ Cache DOM queries on first run to improve performance
+            // by avoiding repetitive document.querySelectorAll calls
+            if (!cachedAnswers) {
+                cachedAnswers = document.querySelectorAll('.faq-answer');
+                cachedChevrons = document.querySelectorAll('.faq-chevron');
+            }
+
             // Close all
-            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
+            cachedAnswers.forEach(a => a.classList.remove('open'));
+            cachedChevrons.forEach(c => c.classList.remove('rotated'));
+
             // Open clicked if was closed
             if (!isOpen) {
                 answer.classList.add('open');
