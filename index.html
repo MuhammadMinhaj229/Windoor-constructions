@@ -1203,15 +1203,22 @@
         }
 
         // ── Catalogue Filter ────────────────────────────────────
+        // Cache DOM queries for filterCatalogue
+        let catalogueItems = null;
+        let catTabs = null;
+
         function filterCatalogue(cat) {
-            document.querySelectorAll('.catalogue-item').forEach(el => {
+            catalogueItems = catalogueItems || document.querySelectorAll('.catalogue-item');
+            catTabs = catTabs || document.querySelectorAll('.cat-tab');
+
+            catalogueItems.forEach(el => {
                 if (cat === 'all' || el.dataset.cat === cat) {
                     el.style.display = '';
                 } else {
                     el.style.display = 'none';
                 }
             });
-            document.querySelectorAll('.cat-tab').forEach(btn => {
+            catTabs.forEach(btn => {
                 const isActive = btn.dataset.cat === cat;
                 btn.classList.toggle('active-tab', isActive);
                 btn.classList.toggle('border-brand-gold/40', isActive);
@@ -1262,16 +1269,23 @@
             runQuoteCalculation();
         }
 
+        // Cache DOM queries for syncCanvasSelections
+        let renderDoorBody = null;
+        let renderDoorPanels = null;
+        let canvasStyleTag = null;
+
         function syncCanvasSelections() {
             const styleCode = document.getElementById('est-style').value;
             currentStyleCode = styleCode;
-            const doorBody = document.getElementById('render-door-body');
-            const doorPanels = document.getElementById('render-door-panels');
-            const canvasTag = document.getElementById('canvas-style-tag');
+
+            renderDoorBody = renderDoorBody || document.getElementById('render-door-body');
+            renderDoorPanels = renderDoorPanels || document.getElementById('render-door-panels');
+            canvasStyleTag = canvasStyleTag || document.getElementById('canvas-style-tag');
+
             const styleObj = styleMetadata[styleCode];
-            doorBody.className = "w-full h-full rounded-sm flex flex-col justify-between p-4 relative overflow-hidden transition-all duration-500 shadow-xl " + styleObj.woodClass;
-            doorPanels.innerHTML = styleObj.panelsHTML;
-            canvasTag.innerText = styleObj.desc;
+            renderDoorBody.className = "w-full h-full rounded-sm flex flex-col justify-between p-4 relative overflow-hidden transition-all duration-500 shadow-xl " + styleObj.woodClass;
+            renderDoorPanels.innerHTML = styleObj.panelsHTML;
+            canvasStyleTag.innerText = styleObj.desc;
             runQuoteCalculation();
         }
 
