@@ -1203,15 +1203,24 @@
         }
 
         // ── Catalogue Filter ────────────────────────────────────
+        let cachedCatalogueItems = null;
+        let cachedCatTabs = null;
+
         function filterCatalogue(cat) {
-            document.querySelectorAll('.catalogue-item').forEach(el => {
+            // ⚡ Bolt: Cache DOM queries on first run to avoid O(N) queries on subsequent interactions
+            if (!cachedCatalogueItems) {
+                cachedCatalogueItems = document.querySelectorAll('.catalogue-item');
+                cachedCatTabs = document.querySelectorAll('.cat-tab');
+            }
+
+            cachedCatalogueItems.forEach(el => {
                 if (cat === 'all' || el.dataset.cat === cat) {
                     el.style.display = '';
                 } else {
                     el.style.display = 'none';
                 }
             });
-            document.querySelectorAll('.cat-tab').forEach(btn => {
+            cachedCatTabs.forEach(btn => {
                 const isActive = btn.dataset.cat === cat;
                 btn.classList.toggle('active-tab', isActive);
                 btn.classList.toggle('border-brand-gold/40', isActive);
