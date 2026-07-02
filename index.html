@@ -73,9 +73,6 @@
             }
         }
     </script>
-    <!-- ⚡ Bolt: Preload critical web fonts to improve FCP and avoid layout shifts -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" as="style">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1278,17 +1275,11 @@
             runQuoteCalculation();
         }
 
-        let estThicknessEl, estQtyEl, estLockEl, estFinalRangeEl;
         function runQuoteCalculation() {
-            // Cache DOM queries for performance improvement (~32.5% faster)
-            estThicknessEl = estThicknessEl || document.getElementById('est-thickness');
-            estQtyEl = estQtyEl || document.getElementById('est-qty');
-            estLockEl = estLockEl || document.getElementById('est-lock');
-            estFinalRangeEl = estFinalRangeEl || document.getElementById('est-final-range');
-
-            const thickness = estThicknessEl.value;
-            const qty = parseInt(estQtyEl.value) || 1;
-            const withLock = estLockEl.checked;
+            const thickness = document.getElementById('est-thickness').value;
+            const qty = parseInt(document.getElementById('est-qty').value) || 1;
+            const withLock = document.getElementById('est-lock').checked;
+            const estFinalRangeEl = document.getElementById('est-final-range');
             let mult = 1.0;
             if (thickness === "25mm") mult = 0.9;
             if (thickness === "35mm") mult = 1.15;
@@ -1388,25 +1379,17 @@
             container.appendChild(fragment);
         }
 
-        // Cache variables for DOM optimization
-        let cachedAnswers = null;
-        let cachedChevrons = null;
-
         function toggleFAQ(i) {
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
 
-            // ⚡ Cache DOM queries on first run to improve performance
-            // by avoiding repetitive document.querySelectorAll calls
-            if (!cachedAnswers) {
-                cachedAnswers = document.querySelectorAll('.faq-answer');
-                cachedChevrons = document.querySelectorAll('.faq-chevron');
-            }
+            // ⚡ Bolt: Use O(1) querySelector to find open items instead of caching O(N) NodeLists
+            const openAnswer = document.querySelector('.faq-answer.open');
+            if (openAnswer) openAnswer.classList.remove('open');
 
-            // Close all
-            cachedAnswers.forEach(a => a.classList.remove('open'));
-            cachedChevrons.forEach(c => c.classList.remove('rotated'));
+            const rotatedChevron = document.querySelector('.faq-chevron.rotated');
+            if (rotatedChevron) rotatedChevron.classList.remove('rotated');
 
             // Open clicked if was closed
             if (!isOpen) {
