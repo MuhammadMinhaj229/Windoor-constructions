@@ -73,15 +73,14 @@
             }
         }
     </script>
-    <!-- ⚡ Bolt: Preload critical web fonts to improve FCP and avoid layout shifts -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" as="style">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
+        /* ⚡ Bolt: Defer rendering of off-screen sections to improve initial layout and FCP */
+        .defer-render { content-visibility: auto; contain-intrinsic-size: 1000px; }
         /* ⚡ Bolt: Removed 'background-attachment: fixed' from body and moved to pseudo-element to prevent scroll repaints */
         body {
             background-color: #f8fafc;
@@ -485,7 +484,7 @@
     </section>
 
     <!-- ── PRODUCT CATALOGUE (NEW SECTION) ───────────────────── -->
-    <section id="catalogue" class="py-24 bg-white border-b border-slate-200">
+    <section id="catalogue" class="py-24 bg-white border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Full Product Catalogue</span>
@@ -748,7 +747,7 @@
     </section>
 
     <!-- ── COST ESTIMATOR ─────────────────────────────────────── -->
-    <section id="customizer" class="py-24 relative overflow-hidden border-b border-slate-200">
+    <section id="customizer" class="py-24 relative overflow-hidden border-b border-slate-200 defer-render">
         <div id="estimator-anchor" class="absolute -top-24"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -880,7 +879,7 @@
     </section>
 
     <!-- ── PROJECT GALLERY ────────────────────────────────────── -->
-    <section id="gallery" class="py-24 bg-white border-b border-slate-200">
+    <section id="gallery" class="py-24 bg-white border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Installed Project Gallery</span>
@@ -989,7 +988,7 @@
     </section>
 
     <!-- ── SERVICES ───────────────────────────────────────────── -->
-    <section id="guarantees" class="py-24 border-b border-slate-200">
+    <section id="guarantees" class="py-24 border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">End-to-End Service</span>
@@ -1017,7 +1016,7 @@
     </section>
 
     <!-- ── TESTIMONIALS ───────────────────────────────────────── -->
-    <section id="testimonials" class="py-24 bg-white border-b border-slate-200">
+    <section id="testimonials" class="py-24 bg-white border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Client Reviews</span>
@@ -1055,7 +1054,7 @@
     </section>
 
     <!-- ── FAQ ────────────────────────────────────────────────── -->
-    <section id="faq" class="py-24 border-b border-slate-200">
+    <section id="faq" class="py-24 border-b border-slate-200 defer-render">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Common Questions</span>
@@ -1070,7 +1069,7 @@
     </section>
 
     <!-- ── CONTACT + MAP ──────────────────────────────────────── -->
-    <section id="contact" class="py-24 bg-white border-t border-slate-200">
+    <section id="contact" class="py-24 bg-white border-t border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
 
@@ -1278,17 +1277,11 @@
             runQuoteCalculation();
         }
 
-        let estThicknessEl, estQtyEl, estLockEl, estFinalRangeEl;
         function runQuoteCalculation() {
-            // Cache DOM queries for performance improvement (~32.5% faster)
-            estThicknessEl = estThicknessEl || document.getElementById('est-thickness');
-            estQtyEl = estQtyEl || document.getElementById('est-qty');
-            estLockEl = estLockEl || document.getElementById('est-lock');
-            estFinalRangeEl = estFinalRangeEl || document.getElementById('est-final-range');
-
-            const thickness = estThicknessEl.value;
-            const qty = parseInt(estQtyEl.value) || 1;
-            const withLock = estLockEl.checked;
+            const thickness = document.getElementById('est-thickness').value;
+            const qty = parseInt(document.getElementById('est-qty').value) || 1;
+            const withLock = document.getElementById('est-lock').checked;
+            const estFinalRangeEl = document.getElementById('est-final-range');
             let mult = 1.0;
             if (thickness === "25mm") mult = 0.9;
             if (thickness === "35mm") mult = 1.15;
@@ -1388,25 +1381,14 @@
             container.appendChild(fragment);
         }
 
-        // Cache variables for DOM optimization
-        let cachedAnswers = null;
-        let cachedChevrons = null;
-
         function toggleFAQ(i) {
             const answer = document.getElementById(`faq-answer-${i}`);
             const chevron = document.getElementById(`faq-chevron-${i}`);
             const isOpen = answer.classList.contains('open');
 
-            // ⚡ Cache DOM queries on first run to improve performance
-            // by avoiding repetitive document.querySelectorAll calls
-            if (!cachedAnswers) {
-                cachedAnswers = document.querySelectorAll('.faq-answer');
-                cachedChevrons = document.querySelectorAll('.faq-chevron');
-            }
-
             // Close all
-            cachedAnswers.forEach(a => a.classList.remove('open'));
-            cachedChevrons.forEach(c => c.classList.remove('rotated'));
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('rotated'));
 
             // Open clicked if was closed
             if (!isOpen) {
