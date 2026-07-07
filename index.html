@@ -167,6 +167,13 @@
             z-index: 1;
             pointer-events: none;
         }
+
+        /* ⚡ Bolt: Use content-visibility to defer layout/rendering of off-screen sections, significantly improving initial FCP and LCP */
+        #about, #whywpc, #catalogue, #customizer, #gallery, #guarantees, #testimonials, #faq, #contact {
+            content-visibility: auto;
+            contain-intrinsic-size: 1000px;
+        }
+
     </style>
 </head>
 <body class="text-slate-900 font-sans antialiased overflow-x-hidden custom-scrollbar">
