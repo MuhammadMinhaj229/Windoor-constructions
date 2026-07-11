@@ -82,6 +82,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
+        /* ⚡ Bolt: Use content-visibility to defer rendering of below-the-fold sections, significantly improving initial FCP and LCP */
+        .defer-render { content-visibility: auto; contain-intrinsic-block-size: 1000px; }
+
         /* ⚡ Bolt: Removed 'background-attachment: fixed' from body and moved to pseudo-element to prevent scroll repaints */
         body {
             background-color: #f8fafc;
@@ -386,7 +389,7 @@
     </section>
 
     <!-- ── BRAND PARTNERS ─────────────────────────────────────── -->
-    <section id="about" class="py-16 bg-white">
+    <section id="about" class="py-16 bg-white defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p class="text-center text-[11px] tracking-[0.3em] text-brand-gold/60 uppercase mb-10 font-bold">Authorized Manufacturing Brand Partners</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center text-center">
@@ -419,7 +422,7 @@
     </section>
 
     <!-- ── WHY WPC ─────────────────────────────────────────────── -->
-    <section id="whywpc" class="py-24 border-y border-slate-200">
+    <section id="whywpc" class="py-24 border-y border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Engineering Matrix</span>
@@ -485,7 +488,7 @@
     </section>
 
     <!-- ── PRODUCT CATALOGUE (NEW SECTION) ───────────────────── -->
-    <section id="catalogue" class="py-24 bg-white border-b border-slate-200">
+    <section id="catalogue" class="py-24 bg-white border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Full Product Catalogue</span>
@@ -748,7 +751,7 @@
     </section>
 
     <!-- ── COST ESTIMATOR ─────────────────────────────────────── -->
-    <section id="customizer" class="py-24 relative overflow-hidden border-b border-slate-200">
+    <section id="customizer" class="py-24 relative overflow-hidden border-b border-slate-200 defer-render">
         <div id="estimator-anchor" class="absolute -top-24"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -880,7 +883,7 @@
     </section>
 
     <!-- ── PROJECT GALLERY ────────────────────────────────────── -->
-    <section id="gallery" class="py-24 bg-white border-b border-slate-200">
+    <section id="gallery" class="py-24 bg-white border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Installed Project Gallery</span>
@@ -989,7 +992,7 @@
     </section>
 
     <!-- ── SERVICES ───────────────────────────────────────────── -->
-    <section id="guarantees" class="py-24 border-b border-slate-200">
+    <section id="guarantees" class="py-24 border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">End-to-End Service</span>
@@ -1017,7 +1020,7 @@
     </section>
 
     <!-- ── TESTIMONIALS ───────────────────────────────────────── -->
-    <section id="testimonials" class="py-24 bg-white border-b border-slate-200">
+    <section id="testimonials" class="py-24 bg-white border-b border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Client Reviews</span>
@@ -1055,7 +1058,7 @@
     </section>
 
     <!-- ── FAQ ────────────────────────────────────────────────── -->
-    <section id="faq" class="py-24 border-b border-slate-200">
+    <section id="faq" class="py-24 border-b border-slate-200 defer-render">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 space-y-4">
                 <span class="text-xs uppercase tracking-[0.3em] text-brand-gold font-bold">Common Questions</span>
@@ -1070,7 +1073,7 @@
     </section>
 
     <!-- ── CONTACT + MAP ──────────────────────────────────────── -->
-    <section id="contact" class="py-24 bg-white border-t border-slate-200">
+    <section id="contact" class="py-24 bg-white border-t border-slate-200 defer-render">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
 
