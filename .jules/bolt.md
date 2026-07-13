@@ -2,3 +2,6 @@ Learned that caching frequently accessed DOM elements like in runQuoteCalculatio
 ## 2026-07-02 - Remove Invisible Backdrop Filters on Opaque Elements
 **Learning:** Fixed elements (header, mobile sticky bar) were given expensive Tailwind `backdrop-blur-*` utilities alongside fully opaque `bg-white` backgrounds. This creates a severe performance anti-pattern on mobile: the browser continuously calculates heavy blur operations on every scroll frame for an effect that is 100% hidden by the solid background.
 **Action:** Always ensure elements with `backdrop-filter` have semi-transparent backgrounds (e.g., `bg-white/80`). If an opaque background is desired, the `backdrop-blur` utility must be removed to avoid destroying scroll FPS.
+## 2026-07-02 - Defer Below-The-Fold Rendering with content-visibility
+**Learning:** For long single-page landing pages like this one, rendering all hidden below-the-fold sections synchronously during initial page load blocks the main thread and hurts First Contentful Paint (FCP) and Largest Contentful Paint (LCP).
+**Action:** Use CSS `content-visibility: auto` paired with `contain-intrinsic-block-size: 1000px` (avoid `contain-intrinsic-size` to prevent horizontal overflow on mobile) on below-the-fold `<section>` elements to defer their layout and rendering until they approach the viewport.
